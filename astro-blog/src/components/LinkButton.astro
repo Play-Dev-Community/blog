@@ -1,0 +1,51 @@
+---
+export interface Props {
+  href: string;
+  className?: string;
+  ariaLabel?: string;
+  title?: string;
+  disabled?: boolean;
+  animated?: boolean;
+}
+
+const { href, className, ariaLabel, title, disabled = false, animated = false } = Astro.props;
+---
+
+{
+  disabled ? (
+    <span
+      class={`group inline-block ${className}`}
+      aria-label={ariaLabel}
+      title={title}
+      aria-disabled={disabled}
+    >
+      <slot />
+    </span>
+  ) : (
+    <a
+      {href}
+      class:list=
+      {[
+        `group inline-block hover:text-skin-accent ${className}`,
+        !animated || 'discord'
+      ]}
+      aria-label={ariaLabel}
+      title={title}
+    >
+      <slot />
+    </a>
+  )
+}
+
+<style>
+  @import 'animate.css';
+
+  .discord {
+    animation: tada infinite;
+    animation-duration: 1s;
+  }
+
+  .discord:hover {
+    animation-play-state: paused;
+  }
+</style>
