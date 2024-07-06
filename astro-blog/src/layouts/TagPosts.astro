@@ -24,7 +24,7 @@ const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
   <Main
     pageTitle={[`Tag:`, `${tagName}`]}
     titleTransition={tag}
-    pageDesc={`All the articles with the tag "${tagName}".`}
+    pageDesc={`Todas as publicações com a tag "${tagName}"`}
   >
     <h1 slot="title" transition:name={tag}>{`Tag:${tag}`}</h1>
     <ul>
@@ -47,4 +47,3 @@ const { currentPage, totalPages, paginatedPosts, tag, tagName } = Astro.props;
 
   <Footer noMarginTop={totalPages > 1} />
 </Layout>
-@components/Post

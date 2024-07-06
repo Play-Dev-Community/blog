@@ -8,6 +8,8 @@ import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
 import { SITE } from "@config";
+import { getUserData } from "@utils/user.utils";
+import { navigate } from "astro:transitions/client";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -23,7 +25,7 @@ const {
   canonicalURL,
   pubDatetime,
   modDatetime,
-  tags,
+  tags
 } = post.data;
 
 const { Content } = await post.render();
@@ -118,7 +120,7 @@ const layoutProps = {
     // Create the main container div
     const progressContainer = document.createElement("div");
     progressContainer.className =
-      "progress-container fixed top-0 z-10 h-1 w-full bg-skin-fill";
+      "progress-container fixed top-0 z-[51] h-1 w-full bg-skin-fill";
 
     // Create the progress bar div
     const progressBar = document.createElement("div");

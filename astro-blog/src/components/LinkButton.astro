@@ -41,11 +41,20 @@ const { href, className, ariaLabel, title, disabled = false, animated = false } 
   @import 'animate.css';
 
   .discord {
-    animation: tada infinite;
-    animation-duration: 1s;
+    animation: tada;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
   }
 
   .discord:hover {
     animation-play-state: paused;
+  }
+
+  .discord path {
+    transition: 0.3s;
+  }
+
+  .discord:hover .cls-1 {
+    @apply fill-skin-accent;
   }
 </style>

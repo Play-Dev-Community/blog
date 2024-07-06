@@ -2,36 +2,161 @@
 import { LOGO_IMAGE, SITE } from "@config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
+import { Image } from "astro:assets";
+import UserArea from "./UserArea";
+import { Icon } from 'astro-icon/components';
+import LayoutConfig from "./LayoutConfig.astro";
 
 export interface Props {
-  activeNav?: "posts" | "tags" | "about" | "search";
-  scrolled?: boolean;
+  activeNav?: "posts" | "tags" | "about" | "search" | "chat";
+  isAuth?: boolean;
 }
 
-const { activeNav, scrolled } = Astro.props;
+const { activeNav, isAuth } = Astro.props;
 ---
-<script>
-  window.addEventListener('scroll', (e) => {
-    if (window.scrollY > 0) {
-      
-    } else {
 
-    }
-  })
-</script>
+<style>
+  @import 'animate.css';
+
+  #skip-to-content {
+    @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
+  }
+  .nav-container {
+    @apply mx-auto flex max-w-5xl flex-col items-center justify-between sm:flex-row;
+  }
+
+  .top-nav-wrap {
+    @apply relative flex w-full items-start justify-between p-4 sm:items-center sm:py-4 transition-all ease-in;
+  }
+
+  .logo {
+    @apply absolute py-1 text-xl font-semibold sm:static sm:text-2xl;
+  }
+  .logo img {
+    @apply transition-all ease-in max-w-12 sm:max-w-16;
+  }
+
+  .hamburger-menu {
+    @apply self-end p-2 sm:hidden;
+  }
+  .hamburger-menu svg {
+    @apply h-6 w-6 scale-125 fill-skin-base;
+  }
+
+  nav {
+    @apply flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0;
+  }
+  nav ul {
+    @apply mt-4 grid w-44 grid-cols-2 grid-rows-4 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:gap-x-5 sm:gap-y-0;
+  }
+  nav ul li {
+    @apply col-span-2 flex items-center justify-center;
+  }
+  nav ul li a {
+    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
+  }
+  nav ul li:nth-last-child(2) a {
+    @apply w-auto;
+  }
+  nav ul li:nth-last-child(1),
+  nav ul li:nth-last-child(2) {
+    @apply col-span-1;
+  }
+  nav a.active {
+    @apply underline decoration-wavy decoration-2 underline-offset-4;
+  }
+  nav a.active svg {
+    @apply fill-skin-accent;
+  }
+
+  nav button {
+    @apply p-1;
+  }
+  nav button svg {
+    @apply h-6 w-6 fill-skin-base;
+  }
+
+  .menu-icon line {
+    @apply transition-opacity duration-75 ease-in-out;
+  }
+  .menu-icon .close {
+    opacity: 0;
+  }
+  .menu-icon.is-active .line {
+    @apply opacity-0;
+  }
+  .menu-icon.is-active .close {
+    @apply opacity-100;
+  }
+</style>
+
+<style is:global>
+  .btn-login {
+    @apply rounded-md p-1 pr-3 flex items-center justify-between gap-1 font-bold transition-all ease-in;
+    background-color: #5964f2;
+    min-width: 100px;
+    color: #f1f1f1;
+  }
+
+  .btn-login:hover {
+    box-shadow: inset 0px 0px 5px 0px #000;
+    letter-spacing: .5px;
+    transform: scale(1.05);
+  }
+
+  .profile {
+    @apply rounded-full flex items-center justify-center relative;
+  }
+
+  .profile .avatar {
+    @apply max-w-[60px] cursor-pointer;
+  }
+
+  .profile .avatar .image {
+    @apply max-w-[60px] rounded-full;
+  }
+
+  .profile .avatar::before,
+  .profile .avatar::after {
+    content: "";
+    position: absolute;
+  }
+
+  .profile .avatar::before {
+    @apply w-[15px] h-[15px] right-[5px] bottom-0 bg-skin-fill border-[1px] border-skin-accent rounded-full;
+  }
+
+  .profile .avatar::after {
+    @apply w-[5px] h-[5px] right-[10px] bottom-[6px] bg-transparent border-r-[1px] border-b-[1px] border-skin-fill rotate-45;
+  }
+
+  .profile .user-options {
+    @apply absolute top-[125%] rounded-md right-0 overflow-hidden bg-skin-tooltip bg-opacity-50 z-10 p-2 min-w-[180px];
+    animation: fadeInDown ease-out;
+    animation-duration: 1s;
+  }
+
+  .profile .user-options hr {
+    opacity: 0.3;
+    margin: 10px 0;
+  }
+</style>
+
+<!-- <iframe src="https://e.widgetbot.io/channels/1200296192890916865/1212450831178408036" allow="clipboard-write; fullscreen" height="600" width="800"></iframe> -->
 
 <header class="sticky top-0 z-50 bg-skin-fill">
   <a id="skip-to-content" href="#main-content">Skip to content</a>
   <div class="nav-container">
-    <div class="top-nav-wrap">
+    <div class="top-nav-wrap" smooth-scroll>
       <a href="/" class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable ? (
-            <img
+            <Image
               src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
               alt={SITE.title}
               width={LOGO_IMAGE.width}
               height={LOGO_IMAGE.height}
+              smooth-scroll
             />
           ) : (
             SITE.title
@@ -76,10 +201,15 @@ const { activeNav, scrolled } = Astro.props;
             </a>
           </li>
           <li>
-            <a href="/about/" class={activeNav === "about" ? "active" : ""}>
+            <a href="/sobre/" class={activeNav === "about" ? "active" : ""}>
               Sobre
             </a>
           </li>
+          <!-- <li>
+            <a href="/chat/" class={activeNav === "chat" ? "active" : ""}>
+              Nosso Chat
+            </a>
+          </li> -->
           <li>
             <LinkButton
               href="/search/"
@@ -99,26 +229,22 @@ const { activeNav, scrolled } = Astro.props;
               <span class="sr-only">Pesquisar</span>
             </LinkButton>
           </li>
-          {
-            SITE.lightAndDarkMode && (
-              <li>
-                <button
-                  id="theme-btn"
-                  class="focus-outline"
-                  title="Toggles light & dark"
-                  aria-label="auto"
-                  aria-live="polite"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg">
-                    <path d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z" />
-                  </svg>
-                  <svg xmlns="http://www.w3.org/2000/svg" id="sun-svg">
-                    <path d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z" />
-                  </svg>
-                </button>
-              </li>
-            )
-          }
+
+          <li>
+            {
+              !isAuth &&
+              <div class="user-area">
+                <UserArea client:load />
+              </div>
+            }
+          </li>
+
+          <li class="relative">
+
+            <LayoutConfig layout-config />
+
+          </li>
+
         </ul>
       </nav>
     </div>
@@ -126,109 +252,38 @@ const { activeNav, scrolled } = Astro.props;
   <Hr />
 </header>
 
-<style>
-  @import 'animate.css';
-
-  #skip-to-content {
-    @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
-  }
-  .nav-container {
-    @apply mx-auto flex max-w-5xl flex-col items-center justify-between sm:flex-row;
-  }
-  .top-nav-wrap {
-    @apply relative flex w-full items-start justify-between p-4 sm:items-center sm:py-8;
-  }
-  .logo {
-    @apply absolute py-1 text-xl font-semibold sm:static sm:text-2xl;
-  }
-  .hamburger-menu {
-    @apply self-end p-2 sm:hidden;
-  }
-  .hamburger-menu svg {
-    @apply h-6 w-6 scale-125 fill-skin-base;
-  }
-
-  nav {
-    @apply flex w-full flex-col items-center sm:ml-2 sm:flex-row sm:justify-end sm:space-x-4 sm:py-0;
-  }
-  nav ul {
-    @apply mt-4 grid w-44 grid-cols-2 grid-rows-4 gap-x-2 gap-y-2 sm:ml-0 sm:mt-0 sm:w-auto sm:gap-x-5 sm:gap-y-0;
-  }
-  nav ul li {
-    @apply col-span-2 flex items-center justify-center;
-  }
-  nav ul li a {
-    @apply w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1;
-  }
-  nav ul li:nth-last-child(2) a {
-    @apply w-auto;
-  }
-  nav ul li:nth-last-child(1),
-  nav ul li:nth-last-child(2) {
-    @apply col-span-1;
-  }
-  nav a.active {
-    @apply underline decoration-wavy decoration-2 underline-offset-4;
-  }
-  nav a.active svg {
-    @apply fill-skin-accent;
-  }
-
-  nav button {
-    @apply p-1;
-  }
-  nav button svg {
-    @apply h-6 w-6 fill-skin-base;
-  }
-
-  #sun-svg:hover {
-    animation: rotateIn infinite;
-    animation-duration: 2s;
-    @apply fill-skin-accent;
-  }
-
-  #theme-btn {
-    @apply p-3 sm:p-1;
-  }
-  #theme-btn svg {
-    @apply scale-125 hover:rotate-12 sm:scale-100;
-  }
-
-  .menu-icon line {
-    @apply transition-opacity duration-75 ease-in-out;
-  }
-  .menu-icon .close {
-    opacity: 0;
-  }
-  .menu-icon.is-active .line {
-    @apply opacity-0;
-  }
-  .menu-icon.is-active .close {
-    @apply opacity-100;
-  }
-</style>
-
 <script>
-  function toggleNav() {
-    // Toggle menu
-    const menuBtn = document.querySelector(".hamburger-menu");
-    const menuIcon = document.querySelector(".menu-icon");
-    const menuItems = document.querySelector("#menu-items");
+  let currentHeight: number;
 
-    menuBtn?.addEventListener("click", () => {
-      const menuExpanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuIcon?.classList.toggle("is-active");
-      menuBtn.setAttribute("aria-expanded", menuExpanded ? "false" : "true");
-      menuBtn.setAttribute(
-        "aria-label",
-        menuExpanded ? "Open Menu" : "Close Menu"
-      );
-      menuItems?.classList.toggle("display-none");
+  function smoothHeightScroll() {
+    const smoothClass = 'smooth-scroll';
+
+    if (!currentHeight) currentHeight = 0;
+
+    document.querySelectorAll('*[smooth-scroll]').forEach(el => {
+      // @ToDo Play Dev -> Create logic to decrease height as scroll
+      const target = {
+        min: 0,
+        max: 20
+      };
+
+      if (!window.scrollY && el.classList.contains(smoothClass)) {
+        el.classList.remove(smoothClass);
+      }
+
+      if (window.scrollY && !el.classList.contains(smoothClass)) {
+        el.classList.add(smoothClass);
+      }
     });
   }
+  document.addEventListener("scroll", smoothHeightScroll);
 
-  toggleNav();
-
-  // Runs on view transitions navigation
-  document.addEventListener("astro:after-swap", toggleNav);
 </script>
+
+<!-- <script>
+  import { isLoggedIn } from "core/session";
+
+  isLoggedIn.subscribe((logged: boolean) => {
+    const container = document.querySelector('*[user-area]') as Element;
+  })
+</script> -->

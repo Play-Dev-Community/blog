@@ -1,0 +1,4 @@
+export enum EStorage {
+  USER = 'PLAY_DEV_DISCORD_USER',
+  ROLES = 'PLAY_DEV_DISCORD_ROLES'
+}

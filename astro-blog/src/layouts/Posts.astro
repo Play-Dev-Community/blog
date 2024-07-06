@@ -5,7 +5,7 @@ import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
-import Card from "@components/Post";
+import Card from "@components/Card";
 import { SITE } from "@config";
 
 export interface Props {
@@ -19,7 +19,7 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
 
 <Layout title={`Postagens | ${SITE.title}`}>
   <Header activeNav="posts" />
-  <Main pageTitle="Postagens" pageDesc="Todos os conteúdos publicados.">
+  <Main pageTitle="Postagens" pageDesc="Todos os conteúdos publicados">
     <ul>
       {
         paginatedPosts.map(({ data, slug }) => (
@@ -38,4 +38,3 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
 
   <Footer noMarginTop={totalPages > 1} />
 </Layout>
-@components/Post

@@ -24,7 +24,7 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   pubDatetime,
   modDatetime,
-  scrollSmooth = false,
+  scrollSmooth = true,
 } = Astro.props;
 
 const socialImageURL = new URL(
@@ -37,6 +37,7 @@ const socialImageURL = new URL(
 <html
   lang=`${LOCALE.lang ?? "en"}`
   class={`${scrollSmooth && "scroll-smooth"}`}
+  data-theme="dark"
 >
   <head>
     <meta charset="UTF-8" />

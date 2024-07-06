@@ -20,7 +20,8 @@ const blog = defineCollection({
         .optional(),
       description: z.string(),
       canonicalURL: z.string().optional(),
-    }),
+      students: z.array(z.string()).optional()
+    })
 });
 
 export const collections = { blog };

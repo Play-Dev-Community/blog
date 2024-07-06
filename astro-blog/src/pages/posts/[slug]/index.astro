@@ -11,7 +11,7 @@ export interface Props {
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  const posts = await getCollection("blog", ({ data }) => !data.draft && !data.students?.length);
 
   const postResult = posts.map(post => ({
     params: { slug: post.slug },
@@ -34,7 +34,7 @@ const sortedPosts = getSortedPosts(posts);
 
 const pagination = getPagination({
   posts: sortedPosts,
-  page: slug,
+  page: slug
 });
 ---
 

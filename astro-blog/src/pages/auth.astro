@@ -1,0 +1,119 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Header from "@components/Header.astro";
+---
+
+<Layout>
+  <Header isAuth={true} />
+  <main id="main-content">
+    <section id="hero">
+      <div>
+        <h1>
+          Login efetuado com sucesso!
+        </h1>
+
+        <h2 class="redirect ellipsis">
+          Aguarde, estamos validando a sua sessão
+        </h2>
+
+      </div>    
+</Layout>
+
+<style>
+    @import 'animate.css';
+  /* ===== Hero Section ===== */
+  #hero {
+    @apply pb-6 pt-8 text-center;
+  }
+  #hero h1 {
+    @apply my-4 text-skin-accent inline-block text-3xl font-bold sm:mt-0 sm:mb-8 sm:text-5xl;
+  }
+  #hero .rss-link {
+    
+  }
+  #hero .rss-icon {
+    @apply h-6 w-6 scale-110 sm:scale-125 fill-skin-accent;
+  }
+  #hero p {
+    @apply my-2;
+  }
+  .social-wrapper {
+    @apply flex flex-col sm:flex-row sm:items-center;
+  }
+  .social-links {
+    @apply mb-1 mr-2 whitespace-nowrap sm:mb-0;
+  }
+
+  /* ===== Featured & Recent Posts Sections ===== */
+  #featured {
+    @apply pt-6;
+  }
+
+
+  #recent-posts {
+    @apply pb-6 pt-8;
+  }
+
+  #featured h2 {
+    @apply text-4xl font-semibold tracking-wide;
+  }
+
+  #recent-posts h2 {
+    @apply text-2xl font-semibold tracking-wide;
+  }
+
+  .all-posts-btn-wrapper {
+    @apply my-8 text-center;
+  }
+
+  .ellipsis::after {
+    content: "";
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+    transform: translateX(-0.25em);
+    text-align: left;
+    animation: ellipsis steps(4, end) 1s infinite;
+  }
+
+  @keyframes ellipsis {
+    0% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    100% {
+      content: "...";
+    }
+  }
+
+  .redirect {
+    font-size: 24px;
+  }
+</style>
+
+<script>
+import { isLoggedIn, startSession } from '../core/session';
+import { navigate } from 'astro:transitions/client';
+
+  isLoggedIn.subscribe( (logged: any) => {
+
+    if (!logged) {
+      window.onload = async () => {
+        const frag = new URLSearchParams(window.location.hash.slice(1));
+
+        const [accessToken, tokenType] = [frag.get('access_token'), frag.get('token_type')];
+
+        if (!accessToken || !tokenType) return;
+
+        await startSession(accessToken);
+
+        setTimeout(() => {
+          navigate('/');
+        }, 2500);
+      }
+    }
+  })
+
+</script>

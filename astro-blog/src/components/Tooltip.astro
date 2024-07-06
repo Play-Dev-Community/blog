@@ -1,0 +1,42 @@
+---
+export interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+<style>
+
+  @import 'animate.css';
+
+  .tooltip {
+    @apply hidden absolute top-[-25%] right-0 rounded-md bg-skin-tooltip bg-opacity-50 z-10 p-1;
+    animation: fadeInUp;
+    animation-duration: 250ms;
+  }
+
+  .tooltip.visible {
+    @apply block;
+  }
+
+</style>
+
+<div class="tooltip-wrapper">
+  <div class="tooltip">
+    { text }
+  </div>
+
+  <slot />
+</div>
+
+<script>
+  const tooltip = document.querySelector('.tooltip');
+  const el = document.querySelector('.tooltip')?.nextElementSibling;
+
+  const toggleTooltip = () => {
+    tooltip?.classList.toggle('visible');
+  };
+
+  el?.addEventListener('mouseenter', toggleTooltip);
+  el?.addEventListener('mouseleave', toggleTooltip);
+</script>

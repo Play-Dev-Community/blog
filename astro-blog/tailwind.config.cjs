@@ -22,16 +22,18 @@ module.exports = {
         skin: {
           base: withOpacity("--color-text-base"),
           accent: withOpacity("--color-accent"),
-          inverted: withOpacity("--color-fill"),
+          inverted: withOpacity("--color-fill")
         },
       },
       backgroundColor: {
         skin: {
           fill: withOpacity("--color-fill"),
           accent: withOpacity("--color-accent"),
+          "accent-dark": withOpacity("--color-accent-dark"),
           inverted: withOpacity("--color-text-base"),
           card: withOpacity("--color-card"),
           "card-muted": withOpacity("--color-card-muted"),
+          tooltip: withOpacity("--color-tooltip")
         },
       },
       outlineColor: {
@@ -44,6 +46,7 @@ module.exports = {
           line: withOpacity("--color-border"),
           fill: withOpacity("--color-text-base"),
           accent: withOpacity("--color-accent"),
+          bg: withOpacity("--color-fill")
         },
       },
       fill: {

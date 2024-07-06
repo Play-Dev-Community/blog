@@ -1,4 +1,5 @@
 ---
+import { Icon } from "astro-icon/components";
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
 
@@ -11,6 +12,16 @@ export interface Props {
 const { noMarginTop = false } = Astro.props;
 ---
 
+<style>
+  @import 'animate.css';
+
+  .icon-heart {
+    @apply mx-1 w-[20px];
+    animation: heartBeat infinite;
+    animation-duration: 1.5s;
+  }
+</style>
+
 <footer class={`${noMarginTop ? "" : "mt-auto"}`}>
   <Hr noPadding />
   <div class="footer-wrapper">
@@ -19,6 +30,7 @@ const { noMarginTop = false } = Astro.props;
       <span>Play Dev &#169; {currentYear}</span>
       <span class="separator">&nbsp;|&nbsp;</span>
       <span>Todos os direitos reservados.</span>
+      <div style="width: 100%;">Desenvolvido com <Icon name="heart" class="icon-heart" /> por Gabriel Moodlight</div>
     </div>
   </div>
 </footer>
@@ -37,7 +49,7 @@ const { noMarginTop = false } = Astro.props;
     @apply scale-125;
   }
   .copyright-wrapper {
-    @apply my-2 flex flex-col items-center whitespace-nowrap sm:flex-row;
+    @apply my-2 flex flex-col flex-wrap items-center whitespace-nowrap sm:flex-row;
   }
   .separator {
     @apply hidden sm:inline;

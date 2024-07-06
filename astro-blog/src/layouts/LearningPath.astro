@@ -1,0 +1,51 @@
+---
+import type { CollectionEntry } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Pagination from "@components/Pagination.astro";
+import CardPrivate from "@components/CardPrivate";
+import { SITE } from "@config";
+
+export interface Props {
+  currentPage: number;
+  totalPages: number;
+  paginatedPosts: CollectionEntry<"blog">[];
+}
+
+const { currentPage, totalPages, paginatedPosts } = Astro.props;
+---
+
+<Layout title={`Minha Trilha | ${SITE.title}`}>
+  <Header />
+  <Main pageTitle="Minha Trilha" pageDesc="Todas as aulas da sua trilha personalizada">
+    {
+      paginatedPosts.length &&
+
+      <ul>
+        {
+          paginatedPosts
+          .map(({ data, slug }) => (
+            <CardPrivate client:load href={`/minha-trilha/${slug}/`} frontmatter={data} />
+          ))
+        }
+      </ul>
+    }
+
+    <!-- {
+      !paginatedPosts.length &&
+      <p>Sua trilha ainda está sendo construída.</p>
+    } -->
+
+  </Main>
+
+  <Pagination
+    {currentPage}
+    {totalPages}
+    prevUrl={`/minha-trilha${currentPage - 1 !== 1 ? "/" + (currentPage - 1) : ""}/`}
+    nextUrl={`/minha-trilha/${currentPage + 1}/`}
+  />
+
+  <Footer noMarginTop={totalPages > 1} />
+</Layout>

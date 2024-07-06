@@ -6,10 +6,10 @@ export type Site = {
   desc: string;
   title: string;
   ogImage?: string;
-  lightAndDarkMode: boolean;
   postPerPage: number;
   scheduledPostMargin: number;
-};
+  layoutConfig: Partial<LayoutConfig>;
+}; 
 
 export type SocialObjects = {
   name: keyof typeof socialIcons;
@@ -18,3 +18,9 @@ export type SocialObjects = {
   linkTitle: string;
   animated?: boolean;
 }[];
+
+export type LayoutConfig = {
+  lightAndDarkMode: boolean;
+  textSize: number;
+  onlyTextMode: boolean;
+};

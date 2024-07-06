@@ -4,11 +4,13 @@ export const SITE: Site = {
   website: "https://playdev.github.io/", // replace this with your deployed domain
   author: "Gabriel Moodlight",
   desc: "Play Dev",
-  title: "Play Dev",
+  title: "Play Dev: Hub",
   ogImage: "astropaper-og.jpg",
-  lightAndDarkMode: true,
   postPerPage: 5,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
+  layoutConfig: {
+    lightAndDarkMode: true
+  }
 };
 
 export const LOCALE = {
@@ -17,23 +19,30 @@ export const LOCALE = {
 } as const;
 
 export const LOGO_IMAGE = {
-  enable: false,
-  svg: true,
-  width: 216,
-  height: 46,
+  enable: true,
+  svg: false,
+  width: 100,
+  height: 100
 };
 
 export const SOCIALS: SocialObjects = [
   {
+    name: "Discord",
+    href: "https://discord.gg/kUDSYE7Y",
+    linkTitle: `${SITE.title} no Discord`,
+    active: true,
+    animated: true
+  },
+  {
     name: "Github",
     href: "https://gabrielmoodlight.github.io/playdev.github.io/",
-    linkTitle: ` ${SITE.title} on Github`,
+    linkTitle: ` ${SITE.title} no Github`,
     active: true,
   },
   {
     name: "Facebook",
-    href: "https://github.com/satnaing/astro-paper",
-    linkTitle: `${SITE.title} on Facebook`,
+    href: "https://www.facebook.com/groups/1286747911414021",
+    linkTitle: `${SITE.title} no Facebook`,
     active: true,
   },
   {
@@ -41,12 +50,5 @@ export const SOCIALS: SocialObjects = [
     href: "https://github.com/satnaing/astro-paper",
     linkTitle: `${SITE.title} on YouTube`,
     active: true,
-  },
-  {
-    name: "Discord",
-    href: "https://github.com/satnaing/astro-paper",
-    linkTitle: `${SITE.title} on Discord`,
-    active: true,
-    animated: true
   }
 ];

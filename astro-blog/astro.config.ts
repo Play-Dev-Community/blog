@@ -4,37 +4,42 @@ import react from "@astrojs/react";
 import remarkToc from "remark-toc";
 import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
+import icon from "astro-icon";
 import { SITE } from "./src/config";
 
 // https://astro.build/config
 export default defineConfig({
+  output: 'static',
   site: SITE.website,
   integrations: [
     tailwind({
-      applyBaseStyles: false,
+      applyBaseStyles: false
     }),
-    react(),
+    react({
+      experimentalReactChildren: true
+    }),
     sitemap(),
+    icon()
   ],
   markdown: {
     remarkPlugins: [
-      remarkToc,
-      [
-        remarkCollapse,
-        {
-          test: "Table of contents",
-        },
-      ],
-    ],
-    shikiConfig: {
-      theme: "one-dark-pro",
-      wrap: true,
-    },
+    remarkToc,
+    [
+      remarkCollapse,
+      {
+        test: "Table of contents"
+      }
+    ]
+  ],
+  shikiConfig: {
+    theme: "one-dark-pro",
+    wrap: true
+  }
   },
   vite: {
     optimizeDeps: {
-      exclude: ["@resvg/resvg-js"],
-    },
+      exclude: ["@resvg/resvg-js"]
+    }
   },
-  scopedStyleStrategy: "where",
+  scopedStyleStrategy: "where"
 });

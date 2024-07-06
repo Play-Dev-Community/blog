@@ -10,9 +10,21 @@ import Post from "@components/Post";
 import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
-import Button from "@components/Button.astro";
 
 const posts = await getCollection("blog");
+
+interface DiscordUserData {
+  avatar: string;
+  discriminator: string;
+  id: string;
+  username: string;
+  global_name: string;
+  accent_color: number;
+  banner_color: string;
+  flags: number;
+  locale: string;
+  premium_type: 0 | 1 | 2;
+}
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
@@ -22,17 +34,41 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 ---
 
 <Layout>
-  <Header />
+  <Header/>
   <main id="main-content">
     <section id="hero">
-      <h1>Blog da Comunidade</h1>
+      <div>
+        <h1>
+          Play Dev: <span class="text-skin-base">Hub</span>
+          <a
+          target="_blank"
+          href="/rss.xml"
+          class="rss-link"
+          aria-label="rss feed"
+          title="RSS Feed">
+  
+          <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
+            ><path
+              d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
+            ></path><path
+              d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
+            ></path><circle cx="6" cy="18" r="2"></circle>
+          </svg>
+          <span class="sr-only">RSS Feed</span>
+          </a>
+        </h1>
+
+      </div>
 
       <p>
-        Bem-vindo ao Blog da Play Dev, onde apaixonados por tecnologia e criativos se encontram 
-        para compartilhar conheciment em áreas como 
+        <!-- Bem-vindo ao Blog da Play Dev, onde apaixonados por tecnologia e criativos se encontram 
+        para compartilhar conhecimento em áreas como 
         💻 desenvolvimento web, 📱 mobile, 🎮 game dev, 🎨 design e mais. 
         Explore tópicos avançados como 🧠 Inteligência Artificial e 
-        conecte-se com profissionais de diversas áreas no mundo da tecnologia!
+        conecte-se com profissionais de diversas áreas no mundo da tecnologia! -->
+        <span class="block animate-slideIn">Bem vindo ao Hub da Comunidade Play Dev! 🎉</span>
+        <span class="block">Aqui você encontra tudo sobre tecnologia e programação. 🤓</span>
+        <span class="block">Acompanhe as novidades! 🌟</span>
       </p>
       <!-- <p>
         Read the blog posts or check
@@ -44,33 +80,15 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </LinkButton> for more info.
       </p> -->
 
-      <div class="flex justify-between items-center">
-
-        {
+      <div class="flex flex-row-reverse justify-between items-center">
+        <!-- {
           // only display if at least one social link is enabled
           socialCount > 0 && (
             <div class="social-wrapper">
               <Socials />
             </div>
           )
-        }
-
-        <a
-        target="_blank"
-        href="/rss.xml"
-        class="rss-link"
-        aria-label="rss feed"
-        title="RSS Feed">
-
-        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-          ><path
-            d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-          ></path><path
-            d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-          ></path><circle cx="6" cy="18" r="2"></circle>
-        </svg>
-        <span class="sr-only">RSS Feed</span>
-        </a>
+        } -->
       </div>
     </section>
 
@@ -86,7 +104,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
                 <Card
                   href={`/posts/${slug}/`}
                   frontmatter={data}
-                  secHeading={false}
                 />
               ))}
             </ul>
@@ -107,7 +124,6 @@ const socialCount = SOCIALS.filter(social => social.active).length;
                   <Post
                     href={`/posts/${slug}/`}
                     frontmatter={data}
-                    secHeading={false}
                   />
                 )
             )}
@@ -132,15 +148,16 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 </Layout>
 
 <style>
+    @import 'animate.css';
   /* ===== Hero Section ===== */
   #hero {
-    @apply pb-6 pt-8;
+    @apply pb-6 pt-8 text-center;
   }
   #hero h1 {
-    @apply my-4 inline-block text-3xl font-bold sm:mt-0 sm:mb-8 sm:text-5xl;
+    @apply my-4 text-skin-accent inline-block text-3xl font-bold sm:mt-0 sm:mb-8 sm:text-5xl;
   }
   #hero .rss-link {
-    @apply flex items-center;
+    
   }
   #hero .rss-icon {
     @apply h-6 w-6 scale-110 sm:scale-125 fill-skin-accent;
@@ -156,16 +173,24 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   }
 
   /* ===== Featured & Recent Posts Sections ===== */
-  #featured,
-  #recent-posts {
-    @apply pb-6 pt-12;
+  #featured {
+    @apply pt-6;
   }
-  #featured h2,
+
+
+  #recent-posts {
+    @apply pb-6 pt-8;
+  }
+
+  #featured h2 {
+    @apply text-4xl font-semibold tracking-wide;
+  }
+
   #recent-posts h2 {
     @apply text-2xl font-semibold tracking-wide;
   }
+
   .all-posts-btn-wrapper {
     @apply my-8 text-center;
   }
 </style>
-@components/Post
