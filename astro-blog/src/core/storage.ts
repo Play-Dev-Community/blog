@@ -1,34 +1,50 @@
 import { EStorage } from "models/storage.model";
-import { atom } from "nanostores";
-
-const $user = atom();
-const $roles = atom();
 
 export class Storage {
-  constructor() {
-    this.handleInitialData();
+  constructor() {}
+
+  private setCookie(cname: string, cvalue: string, exdays: number) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    let expires = "expires="+d.toUTCString();
+
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
   }
 
-  private handleInitialData() {
-    const data = Object.values(EStorage);
+  private getCookie(cname: string) {
+    let name = cname + "=";
+    let ca = document.cookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  private deleteCookie(cname: string) {
+    if( this.getCookie(cname) ) {
+      document.cookie = `${cname}=;expires=Thu, 01 Jan 1970 00:00:01 GMT`
+    }
   }
 
   setData(key: string, value: any) {
-    window.localStorage.setItem(key, JSON.stringify(value));
+    this.setCookie(key, JSON.stringify(value), 3);
   }
 
   getData(key: string) {
-    let localData = window.localStorage.getItem(key);
-    localData = JSON.parse(localData!);
-
-    return localData;
+    return JSON.parse(this.getCookie(key));
   }
 
   clearData() {
     const keys = Object.values(EStorage);
 
     for (let key of keys) {
-      window.localStorage.removeItem(key);
+      this.deleteCookie(key);
     }
   }
 };

@@ -1,4 +1,5 @@
 export enum EStorage {
-  USER = 'PLAY_DEV_DISCORD_USER',
-  ROLES = 'PLAY_DEV_DISCORD_ROLES'
+  AVATAR = 'discord_member_avatar',
+  MEMBER = 'discord_member',
+  ROLES = 'discord_member_roles'
 }

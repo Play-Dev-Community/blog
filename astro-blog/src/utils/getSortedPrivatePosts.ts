@@ -1,7 +1,7 @@
 import type { CollectionEntry } from "astro:content";
 import privatePostFilter from "./privatePostFilter";
 
-const getSortedPrivatePosts = (posts: CollectionEntry<"blog">[]) => {
+const getSortedPrivatePosts = (posts: CollectionEntry<"private">[]) => {
   return posts
     .filter(privatePostFilter)
     .sort(

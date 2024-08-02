@@ -36,26 +36,29 @@
   }
 
 
+
   :root,
   html[data-theme="light"] {
     --color-fill: 241, 241, 241;
     --color-text-base: 40, 39, 40;
     --color-accent: 20, 184, 192;
     --color-accent-dark: 28, 159, 166;
+    --color-accent-darker: 23, 100, 105;
     --color-card: 230, 230, 230;
     --color-card-muted: 205, 205, 205;
     --color-border: 28, 159, 166;
     --color-tooltip: 204, 204, 204;
+    --color-moodlight: 191, 132, 19
   }
   html[data-theme="dark"] {
-    --color-fill: 31, 31, 31;
+    --color-fill: 10, 10, 10;
     --color-text-base: 234, 237, 243;
     --color-accent: 20, 184, 192;
     --color-accent-dark: 28, 159, 166;
     --color-card: 52, 63, 96;
     --color-card-muted: 138, 51, 2;
     --color-border: 28, 159, 166;
-    --color-tooltip: 0, 0, 0;
+    --color-tooltip: 37, 37, 37;
   }
   #sun-svg,
   html[data-theme="dark"] #moon-svg {
@@ -69,9 +72,15 @@
     @apply flex min-h-[100svh] flex-col bg-skin-fill text-base font-sans text-skin-base 
     selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted ;
   }
-  section,
+  section {
+    @apply mx-auto max-w-6xl;
+  }
+
   footer {
-    @apply mx-auto max-w-5xl px-4;
+    @apply mx-auto max-w-7xl;
+  }
+  section {
+    @apply px-4;
   }
   a {
     @apply outline-2 outline-offset-1 outline-skin-fill 
@@ -92,7 +101,7 @@
     hover:prose-a:text-skin-accent prose-blockquote:!border-l-skin-accent
     prose-blockquote:border-opacity-50 prose-blockquote:opacity-80
     prose-figcaption:!text-skin-base prose-figcaption:opacity-70
-    prose-strong:!text-skin-base
+    prose-strong:!text-skin-base prose-strong:!font-bold
 
     
     prose-code:rounded prose-code:bg-skin-card 

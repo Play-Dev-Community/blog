@@ -7,34 +7,26 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import { SITE } from "./src/config";
 
+import vercel from "@astrojs/vercel/serverless";
+
 // https://astro.build/config
 export default defineConfig({
-  output: 'static',
+  output: 'hybrid',
+  adapter: vercel(),
   site: SITE.website,
-  integrations: [
-    tailwind({
-      applyBaseStyles: false
-    }),
-    react({
-      experimentalReactChildren: true
-    }),
-    sitemap(),
-    icon()
-  ],
+  integrations: [tailwind({
+    applyBaseStyles: false
+  }), react({
+    experimentalReactChildren: true
+  }), sitemap(), icon()],
   markdown: {
-    remarkPlugins: [
-    remarkToc,
-    [
-      remarkCollapse,
-      {
-        test: "Table of contents"
-      }
-    ]
-  ],
-  shikiConfig: {
-    theme: "one-dark-pro",
-    wrap: true
-  }
+    remarkPlugins: [remarkToc, [remarkCollapse, {
+      test: "Table of contents"
+    }]],
+    shikiConfig: {
+      theme: "one-dark-pro",
+      wrap: true
+    }
   },
   vite: {
     optimizeDeps: {

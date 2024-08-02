@@ -8,16 +8,18 @@ interface DatetimesProps {
 interface Props extends DatetimesProps {
   size?: "sm" | "lg";
   className?: string;
+  author?: string;
 }
 
 export default function Datetime({
   pubDatetime,
   modDatetime,
+  author,
   size = "sm",
   className,
 }: Props) {
   return (
-    <div className={`font-thin flex items-center space-x-2 opacity-80 ${className}`}>
+    <div className={`font-thin flex items-center opacity-80 ${className}`}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className={`${
@@ -27,20 +29,23 @@ export default function Datetime({
       >
         <path d="M7 11h2v2H7zm0 4h2v2H7zm4-4h2v2h-2zm0 4h2v2h-2zm4-4h2v2h-2zm0 4h2v2h-2z"></path>
         <path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path>
-      </svg>
-      {modDatetime && modDatetime > pubDatetime ? (
+      </svg>  
+
         <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
-          Atualizado:
+          { modDatetime && modDatetime > pubDatetime ? 'Atualizado:' : null }
+
+          <span className="mx-1">
+            <FormattedDatetime
+              pubDatetime={pubDatetime}
+              modDatetime={modDatetime}
+            />
+          </span>
+
+          {
+            author && `por ${ author }`
+          }
+
         </span>
-      ) : (
-        <span className="sr-only">Publicado:</span>
-      )}
-      <span className={`italic ${size === "sm" ? "text-sm" : "text-base"}`}>
-        <FormattedDatetime
-          pubDatetime={pubDatetime}
-          modDatetime={modDatetime}
-        />
-      </span>
     </div>
   );
 }
@@ -64,8 +69,8 @@ const FormattedDatetime = ({ pubDatetime, modDatetime }: DatetimesProps) => {
   return (
     <>
       <time dateTime={myDatetime.toISOString()}>{date}</time>
-      <span aria-hidden="true"> | </span>
-      <span className="sr-only">&nbsp;at&nbsp;</span>
+      <span aria-hidden="true"> às </span>
+      {/* <span className="sr-only">&nbsp;at&nbsp;</span> */}
       <span className="text-nowrap">{time}</span>
     </>
   );

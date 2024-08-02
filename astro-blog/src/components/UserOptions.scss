@@ -1,0 +1,12 @@
+.profile .user-options {
+  border: 1px solid;
+  @apply border-skin-line;
+  @apply sm:border-none absolute top-[125%] left-[50%] translate-x-[-50%] sm:translate-x-0 rounded-md sm:right-0 sm:left-auto overflow-hidden bg-skin-tooltip z-10 p-2 min-w-[180px];
+  animation: fadeIn ease-out;
+  animation-duration: 0.5s;
+}
+
+.profile .user-options hr {
+  opacity: 0.3;
+  margin: 10px 0;
+}

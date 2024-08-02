@@ -1,14 +1,4 @@
- <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-
 <svg xmlns="http://www.w3.org/2000/svg" width="865.76" height="682.89" viewBox="0 0 865.76 682.89">
-
-<defs>
-
-<style xmlns="http://www.w3.org/1999/xhtml">*, body, html { -webkit-font-smoothing: antialiased; }
-img, svg { max-width: 100%; }
-</style>
-
-</defs>
 
 <path d="M391.82,532.2c-15.44,2.82-87.85,18.09-73.28,55a33.24,33.24,0,0,0,9.74,13.13c18.18,15.25,83.33,52.58,272.06,32.22,10.69-1.15,21.42-1.86,32.17-2.06,49.73-.92,206-9.34,202-78.54,0,0-2.07-38.74-95.7-26.87l-71.21-4.43s-160.55-12.38-268.7,10.11C396.57,531.29,394.2,531.77,391.82,532.2Z" fill="#787878" data-primary="true"/>
 

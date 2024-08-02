@@ -5,13 +5,13 @@ import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
-import CardPrivate from "@components/CardPrivate";
+import PostPrivate from "@components/PostPrivate";
 import { SITE } from "@config";
 
 export interface Props {
   currentPage: number;
   totalPages: number;
-  paginatedPosts: CollectionEntry<"blog">[];
+  paginatedPosts: CollectionEntry<"private">[];
 }
 
 const { currentPage, totalPages, paginatedPosts } = Astro.props;
@@ -27,7 +27,7 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
         {
           paginatedPosts
           .map(({ data, slug }) => (
-            <CardPrivate client:load href={`/minha-trilha/${slug}/`} frontmatter={data} />
+            <PostPrivate client:load href={`/minha-trilha/${slug}/`} frontmatter={data} />
           ))
         }
       </ul>

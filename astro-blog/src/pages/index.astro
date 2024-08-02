@@ -5,11 +5,11 @@ import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import LinkButton from "@components/LinkButton.astro";
 import Hr from "@components/Hr.astro";
-import Card from "@components/Card";
+import Feature from "@components/Feature";
 import Post from "@components/Post";
-import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
+import BannerCookies from "@components/BannerCookies.astro";
 
 const posts = await getCollection("blog");
 
@@ -36,72 +36,48 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 <Layout>
   <Header/>
   <main id="main-content">
-    <section id="hero">
+    <!-- <section id="hero">
       <div>
         <h1>
-          Play Dev: <span class="text-skin-base">Hub</span>
-          <a
-          target="_blank"
-          href="/rss.xml"
-          class="rss-link"
-          aria-label="rss feed"
-          title="RSS Feed">
-  
-          <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-            ><path
-              d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-            ></path><path
-              d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-            ></path><circle cx="6" cy="18" r="2"></circle>
-          </svg>
-          <span class="sr-only">RSS Feed</span>
-          </a>
+          <span class="text-skin-base">Blog de Programação</span>
         </h1>
 
       </div>
 
       <p>
-        <!-- Bem-vindo ao Blog da Play Dev, onde apaixonados por tecnologia e criativos se encontram 
+        Bem-vindo ao Blog da Play Dev, onde apaixonados por tecnologia e criativos se encontram 
         para compartilhar conhecimento em áreas como 
         💻 desenvolvimento web, 📱 mobile, 🎮 game dev, 🎨 design e mais. 
         Explore tópicos avançados como 🧠 Inteligência Artificial e 
-        conecte-se com profissionais de diversas áreas no mundo da tecnologia! -->
-        <span class="block animate-slideIn">Bem vindo ao Hub da Comunidade Play Dev! 🎉</span>
+        conecte-se com profissionais de diversas áreas no mundo da tecnologia!
+        <span class="block animate-slideIn"></span>
         <span class="block">Aqui você encontra tudo sobre tecnologia e programação. 🤓</span>
-        <span class="block">Acompanhe as novidades! 🌟</span>
+        <span class="block">Acompanhe as novidades e fique por dentro do que há de mais recente no mundo dev! 🌟</span>
+
       </p>
-      <!-- <p>
-        Read the blog posts or check
-        <LinkButton
-          className="underline decoration-dashed underline-offset-4 hover:text-skin-accent"
-          href="https://github.com/satnaing/astro-paper#readme"
-        >
-          README
-        </LinkButton> for more info.
-      </p> -->
 
       <div class="flex flex-row-reverse justify-between items-center">
-        <!-- {
+        {
           // only display if at least one social link is enabled
           socialCount > 0 && (
             <div class="social-wrapper">
               <Socials />
             </div>
           )
-        } -->
+        }
       </div>
     </section>
 
-    <Hr />
+    <Hr /> -->
 
     {
       featuredPosts.length > 0 && (
         <>
           <section id="featured">
             <h2>Apresentação</h2>
-            <ul>
+            <ul class="flex flex-col justify-between sm:flex-row">
               {featuredPosts.map(({ data, slug }) => (
-                <Card
+                <Feature
                   href={`/posts/${slug}/`}
                   frontmatter={data}
                 />
@@ -132,17 +108,22 @@ const socialCount = SOCIALS.filter(social => social.active).length;
       )
     }
 
-    <div class="all-posts-btn-wrapper">
-      <LinkButton href="/posts/">
-        Todas as Postagens
-        <svg xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-          ></path>
-        </svg>
-      </LinkButton>
-    </div>
+    {
+      sortedPosts.length > 5 &&
+      <div class="all-posts-btn-wrapper">
+        <LinkButton href="/posts/">
+          Todas as Postagens
+          <svg xmlns="http://www.w3.org/2000/svg"
+            ><path
+              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
+            ></path>
+          </svg>
+        </LinkButton>
+      </div>
+    }
   </main>
+
+  <BannerCookies />
 
   <Footer />
 </Layout>
@@ -154,13 +135,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply pb-6 pt-8 text-center;
   }
   #hero h1 {
-    @apply my-4 text-skin-accent inline-block text-3xl font-bold sm:mt-0 sm:mb-8 sm:text-5xl;
-  }
-  #hero .rss-link {
-    
-  }
-  #hero .rss-icon {
-    @apply h-6 w-6 scale-110 sm:scale-125 fill-skin-accent;
+    @apply my-4 text-skin-accent inline-block text-3xl font-bold sm:mt-0 sm:text-5xl;
   }
   #hero p {
     @apply my-2;
@@ -177,13 +152,12 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     @apply pt-6;
   }
 
-
   #recent-posts {
     @apply pb-6 pt-8;
   }
 
   #featured h2 {
-    @apply text-4xl font-semibold tracking-wide;
+    @apply text-2xl sm:text-4xl font-semibold tracking-wide;
   }
 
   #recent-posts h2 {
@@ -193,4 +167,20 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   .all-posts-btn-wrapper {
     @apply my-8 text-center;
   }
+
+  .all-posts-btn-wrapper svg {
+    animation: wobble infinite;
+    animation-duration: 2s;
+  }
 </style>
+
+<!-- <script>
+
+  const manifest = document.createElement('link');
+  manifest.rel = 'manifest';
+  manifest.href = 'manifest.json';
+  document.head.appendChild(manifest);
+
+  document.head.appendChild(manifest);
+
+</script> -->

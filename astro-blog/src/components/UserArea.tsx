@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import discordIcon from '@icons/discord.png';
-import UserOptions from './UserOptions';
-import { getUserData, getUserRoles } from '@utils/user.utils';
+export const prerender = true;
 
-interface UserInfoProps {
-  name?: string;
-  avatar?: string;
-}
+import React, { useEffect, useState } from 'react';
+import discordIcon from '@icons/discord.svg';
+import UserOptions from './UserOptions';
+import { getUserAvatar, getUserData, getUserRoles } from '@utils/user.utils';
+import type { DiscordUserData } from 'core/api';
+import { Storage } from '../core/storage';
+import { EStorage } from 'models/storage.model';
+
+import './UserArea.scss';
+
+interface UserInfoProps {}
 
 const UserArea: React.FC<UserInfoProps> = () => {
   const [name, setName] = useState<string | null>(null);
@@ -16,43 +20,53 @@ const UserArea: React.FC<UserInfoProps> = () => {
   const [isStudent, setStudent] = useState<boolean>(false);
 
   useEffect(() => {
+
     setReadyToRender(true);
 
     if (!getUserData() || !getUserRoles()) return;
 
-    const storedUser = getUserData();
+    const storedUser: DiscordUserData = getUserData();
     const storedRoles = getUserRoles();
-
-    if (storedUser) {
-      setName(storedUser.global_name);
-      setAvatar(`https://cdn.discordapp.com/avatars/${storedUser.id}/${storedUser.avatar}`);
-    }
+    const storedAvatar = getUserAvatar();
 
     if (storedRoles) {
       setStudent(storedRoles.includes('1237165303616634963'));
     }
 
-    document.addEventListener("click", (e) => {
-      const target = e.target as HTMLElement;
-  
-      if (target !== document.querySelector('.avatar')) {
-        if (optionsVisible) {
-          setOptionsVisible(false);
-        }
+    if (!getUserAvatar()) {
+      if (storedUser) {
+        const avatar = `https://cdn.discordapp.com/avatars/${storedUser.id}/${storedUser.avatar}`;
+
+        setName(storedUser.global_name);
+        setAvatar(avatar);
+        new Storage().setData(EStorage.AVATAR, avatar);
       }
-    });
+    } else {
+      if (storedUser) {
+        setName(storedUser.global_name);
+        setAvatar(storedAvatar);
+      }
+    }
 
   }, []);
 
   const toggleUserOptions = () => {
-    setOptionsVisible(!optionsVisible);
+    setOptionsVisible(!optionsVisible );
+  };
+
+  const convertURL = () => {
+    let url = window.location.origin;
+
+    return `${url}/auth`;
   };
 
   const authDiscord = () => {
+    console.log('URL', convertURL());
+
     const
     clientID = '1192987982257475675',
     type = 'token',
-    URI = 'http%3A%2F%2Flocalhost%3A4321%2Fauth',
+    URI = convertURL(),
     scope = 'identify+guilds.members.read+guilds';
 
     window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientID}&response_type=${type}&redirect_uri=${URI}&scope=${scope}`;
@@ -66,8 +80,8 @@ const UserArea: React.FC<UserInfoProps> = () => {
             <img
               src={discordIcon.src}
               alt='Ícone da logo do Discord'
-              width='40'
-              height='40'
+              width='25'
+              height='25'
             />
             Login
           </button>
@@ -81,7 +95,7 @@ const UserArea: React.FC<UserInfoProps> = () => {
         <img className='image' src={avatar!} alt={name!} />
       </div>
 
-      { optionsVisible && <UserOptions username={name!} isStudent={isStudent} /> }
+      { optionsVisible && <UserOptions username={name!} isStudent={isStudent} client:load /> }
 
     </div>
   );

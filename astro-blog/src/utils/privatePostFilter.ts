@@ -1,7 +1,7 @@
 import { SITE } from "@config";
 import type { CollectionEntry } from "astro:content";
 
-const privatePostFilter = ({ data }: CollectionEntry<"blog">) => {
+const privatePostFilter = ({ data }: CollectionEntry<"private">) => {
 
   const isPublishTimePassed =
     Date.now() >

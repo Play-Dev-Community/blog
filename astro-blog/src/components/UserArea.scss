@@ -1,0 +1,38 @@
+.btn-login {
+  @apply rounded-md p-2 flex items-center justify-between gap-2 font-bold transition-all ease-in;
+  border: 2px solid #14b8c0;
+  color: #f1f1f1;
+}
+
+@media screen and (min-width: 640px) {
+  .btn-login:hover {
+    box-shadow: inset 0 0 5px 0 #14b8c0;
+    transform: scale(1.05);
+  }
+}
+
+.profile {
+  @apply rounded-full flex items-center justify-center relative;
+}
+
+.profile .avatar {
+  @apply max-w-[60px] cursor-pointer;
+}
+
+.profile .avatar .image {
+  @apply max-w-[60px] rounded-full;
+}
+
+.profile .avatar::before,
+.profile .avatar::after {
+  content: "";
+  position: absolute;
+}
+
+.profile .avatar::before {
+  @apply w-[15px] h-[15px] right-[5px] bottom-0 bg-skin-fill border-[1px] border-skin-accent rounded-full;
+}
+
+.profile .avatar::after {
+  @apply w-[5px] h-[5px] right-[10px] bottom-[6px] bg-transparent border-r-[1px] border-b-[1px] border-skin-fill rotate-45;
+}

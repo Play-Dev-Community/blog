@@ -22,6 +22,7 @@ module.exports = {
         skin: {
           base: withOpacity("--color-text-base"),
           accent: withOpacity("--color-accent"),
+          "accent-visited": withOpacity("--color-accent-darker"),
           inverted: withOpacity("--color-fill")
         },
       },
@@ -55,12 +56,12 @@ module.exports = {
           accent: withOpacity("--color-accent"),
         },
         transparent: "transparent",
-      },
+    },
       fontFamily: {
         sans: ["gg sans", "sans-serif"],
+        title: ["ginto", "gg sans", "sans-serif"],
         mono: ["IBM Plex Mono", "monospace"],
       },
-
       typography: {
         DEFAULT: {
           css: {

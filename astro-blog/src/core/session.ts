@@ -2,7 +2,6 @@ import { getMemberRoles, getUserDetails } from "./api";
 import { EStorage } from "models/storage.model";
 import { Storage } from './storage';
 import { atom } from "nanostores";
-import confetti from 'canvas-confetti';
 
 export const isLoggedIn = atom(false);
 
@@ -22,7 +21,7 @@ export async function getUser(save = false, token: string): Promise<any> {
   const userData = await getUserDetails(getHeaders(token));
 
   if (userData && save) {
-    storage.setData(EStorage.USER, userData);
+    storage.setData(EStorage.MEMBER, userData);
     isLogged = true;
     isLoggedIn.set(true);
   }
@@ -46,12 +45,12 @@ export function logOut() {
   isLoggedIn.set(false);
 
   storage.clearData();
+
+  window.location.reload();
 }
 
 export async function startSession(token: string) {
   token = token;
-
-  confetti();
 
   await getUser(true, token);
   await getRoles(true, token);

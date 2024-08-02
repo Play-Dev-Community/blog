@@ -1,0 +1,29 @@
+---
+import { LOGO_IMAGE, SITE } from "@config"
+import { Image } from "astro:assets"
+
+
+export interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const finalText = text.split('');
+---
+
+<div class="flex items-center gap-2">
+  <Image
+    src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+    alt={SITE.title}
+    width={LOGO_IMAGE.width}
+    height={LOGO_IMAGE.height}
+    smooth-scroll
+  />
+
+  {
+    finalText.map((letter, index) => {
+      <span>{letter}</span>
+    })
+  }
+
+</div>

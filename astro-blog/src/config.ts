@@ -1,15 +1,17 @@
 import type { Site, SocialObjects } from "./types";
 
 export const SITE: Site = {
-  website: "https://playdev.github.io/", // replace this with your deployed domain
+  website: "https://https://playdevhub.vercel.app",
   author: "Gabriel Moodlight",
-  desc: "Play Dev",
-  title: "Play Dev: Hub",
+  desc: "Hub de estudos para programação",
+  title: "Play Dev",
   ogImage: "astropaper-og.jpg",
   postPerPage: 5,
-  scheduledPostMargin: 15 * 60 * 1000, // 15 minutes
+  scheduledPostMargin: 15 * 60 * 1000, // Minutes
   layoutConfig: {
-    lightAndDarkMode: true
+    lightAndDarkMode: true,
+    noAnimations: true,
+    textSize: true
   }
 };
 
@@ -28,7 +30,7 @@ export const LOGO_IMAGE = {
 export const SOCIALS: SocialObjects = [
   {
     name: "Discord",
-    href: "https://discord.gg/kUDSYE7Y",
+    href: "https://discord.gg/ZmxuUhuwfD",
     linkTitle: `${SITE.title} no Discord`,
     active: true,
     animated: true
@@ -47,8 +49,8 @@ export const SOCIALS: SocialObjects = [
   },
   {
     name: "YouTube",
-    href: "https://github.com/satnaing/astro-paper",
-    linkTitle: `${SITE.title} on YouTube`,
+    href: "https://www.youtube.com/@GabrielMoodlight",
+    linkTitle: `${SITE.title} no YouTube`,
     active: true,
   }
 ];

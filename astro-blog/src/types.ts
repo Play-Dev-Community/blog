@@ -21,6 +21,7 @@ export type SocialObjects = {
 
 export type LayoutConfig = {
   lightAndDarkMode: boolean;
-  textSize: number;
+  textSize: boolean;
+  noAnimations: boolean;
   onlyTextMode: boolean;
 };

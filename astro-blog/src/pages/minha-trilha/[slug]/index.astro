@@ -1,17 +1,17 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import PostDetails from "@layouts/PostDetails.astro";
 import getPageNumbers from "@utils/getPageNumbers";
 import getPagination from "@utils/getPagination";
 import getSortedPrivatePosts from "@utils/getSortedPrivatePosts";
-import LearningPath from "@layouts/LearningPath.astro";
+import MyLearningPath from "@layouts/MyLearningPath.astro";
+import PostPrivateDetails from "@layouts/PostPrivateDetails.astro";
 
 export interface Props {
-  post: CollectionEntry<"blog">;
+  post: CollectionEntry<"private">;
 }
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft && data.students?.length);
+  const posts = await getCollection("private", ({ data }) => !data.draft && data.students?.length);
 
   const postResult = posts.map(post => ({
     params: { slug: post.slug },
@@ -28,7 +28,7 @@ export async function getStaticPaths() {
 const { slug } = Astro.params;
 const { post } = Astro.props;
 
-const posts = await getCollection("blog");
+const posts = await getCollection("private");
 
 const sortedPosts = getSortedPrivatePosts(posts);
 
@@ -38,4 +38,4 @@ const pagination = getPagination({
 });
 ---
 
-{post ? <PostDetails post={post} /> : <LearningPath {...pagination} />}
+{post ? <PostPrivateDetails post={post} /> : <MyLearningPath {...pagination} />}

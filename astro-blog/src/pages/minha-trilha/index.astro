@@ -2,9 +2,9 @@
 import { getCollection } from "astro:content";
 import getSortedPrivatePosts from "@utils/getSortedPrivatePosts";
 import getPagination from "@utils/getPagination";
-import LearningPath from "@layouts/LearningPath.astro";
+import MyLearningPath from "@layouts/MyLearningPath.astro";
 
-const posts = await getCollection("blog");
+const posts = await getCollection("private");
 
 const sortedPosts = getSortedPrivatePosts(posts);
 
@@ -15,4 +15,4 @@ const pagination = getPagination({
 });
 ---
 
-<LearningPath {...pagination} />
+<MyLearningPath {...pagination} />
