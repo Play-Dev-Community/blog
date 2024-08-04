@@ -7,12 +7,14 @@ import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
+import Comments from "@components/Comments/Comments";
 import { SITE } from "@config";
 
 export interface Props {
   post: CollectionEntry<"blog">;
 }
 
+const { slug } = Astro.params;
 const { post } = Astro.props;
 
 const {
@@ -23,7 +25,7 @@ const {
   canonicalURL,
   pubDatetime,
   modDatetime,
-  tags
+  tags,
 } = post.data;
 
 const { Content } = await post.render();
@@ -103,7 +105,11 @@ const layoutProps = {
 
       <ShareLinks />
     </div>
+
+    <!-- <Comments post={slug!} client:load /> -->
+
   </main>
+
   <Footer />
 </Layout>
 
@@ -185,7 +191,7 @@ const layoutProps = {
       let copyButton = document.createElement("button");
       copyButton.className =
         "copy-code absolute right-3 -top-3 rounded bg-skin-card px-2 py-1 text-xs leading-4 text-skin-base font-medium";
-      copyButton.innerHTML = copyButtonLabel;
+      copyButton.textContent = copyButtonLabel;
       codeBlock.setAttribute("tabindex", "0");
       codeBlock.appendChild(copyButton);
 

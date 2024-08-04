@@ -2,7 +2,6 @@
 import { LOCALE, SITE } from "@config";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
-import BannerCookies from "@components/BannerCookies.astro";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -56,9 +55,17 @@ const socialImageURL = new URL(
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
+    <meta property="og:site_name" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Article Published/Modified time -->
     {
@@ -77,13 +84,6 @@ const socialImageURL = new URL(
         />
       )
     }
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={socialImageURL} />
 
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -127,9 +127,7 @@ const socialImageURL = new URL(
 <script>
 import confetti from "canvas-confetti";
 
-document.addEventListener('astro:page-load', () => {
-
-    const randomInRange = (min:number, max:number) => {
+const randomInRange = (min:number, max:number) => {
       return Math.random() * (max - min) + min;
     }
 
@@ -155,13 +153,21 @@ document.addEventListener('astro:page-load', () => {
         gravity: randomInRange(0.4, 0.6),
         scalar: randomInRange(0.4, 1),
         drift: randomInRange(-0.4, 0.4),
-        zIndex: 2
+        zIndex: -1,
+        disableForReducedMotion: true
       });
 
       if (timeLeft > 0) {
         requestAnimationFrame(snow);
       }
     }
+
+  //   document.addEventListener('astro:after-swap', () => {
+  //     snow();
+  //   });
+
+  // document.addEventListener('astro:after-swap', () => {
+  //   snow();
 
     // const onClickOutside = (event: MouseEvent) => {
     //   const target = event.target as HTMLElement;
@@ -195,5 +201,5 @@ document.addEventListener('astro:page-load', () => {
     //   });
     // }
     // window.addEventListener('click', onClickOutside);
-  });
+  // });
 </script>

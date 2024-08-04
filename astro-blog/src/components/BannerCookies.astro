@@ -5,7 +5,7 @@
 
   .banner-cookies {
     @apply opacity-0 bg-skin-tooltip rounded-sm px-4 py-2 w-6/12 text-center;
-    @apply flex justify-center items-center;
+    @apply flex justify-center items-center h-[40%] sm:h-[30%];
     @apply flex-col;
     width: 100%;
     position: fixed;
@@ -14,7 +14,6 @@
     transition: 0.3s all;
     pointer-events: none;
     z-index: 40;
-    height: 30%;
   }
 
   .cookies.visible .banner-cookies {
@@ -27,7 +26,7 @@
   }
 
   .banner-cookies .content {
-    @apply opacity-0 p-6 max-w-7xl flex flex-col gap-4;
+    @apply opacity-0 p-6 max-w-7xl flex flex-col gap-2 sm:gap-4;
     transform: translateY(25%);
     transition: 0.3s all ease-in-out;
     transition-delay: 500ms;
@@ -39,11 +38,11 @@
   }
 
   .banner-cookies .content .title {
-    @apply text-5xl font-bold;
+    @apply text-2xl sm:text-4xl font-bold;
   }
 
   .banner-cookies .content .text {
-    @apply text-lg;
+    @apply sm:text-lg;
   }
 
   .banner-cookies .actions {

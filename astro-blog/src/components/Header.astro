@@ -108,7 +108,7 @@ const { activeNav, isAuth } = Astro.props;
   @media screen and (max-width: 640px) {
     #menu-items {
       margin-top: 30px;
-      display: flex;
+      display: none;
       flex-direction: column-reverse;
       justify-content: flex-end;
       margin: 0;
@@ -124,7 +124,7 @@ const { activeNav, isAuth } = Astro.props;
     }
 
     #menu-items.visible {
-
+      display: flex;
       animation: fadeInRight;
       animation-duration: 0.5s;
     }

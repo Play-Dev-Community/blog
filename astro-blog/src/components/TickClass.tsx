@@ -1,6 +1,6 @@
 import { getUserData } from "@utils/user.utils";
 import type { DiscordUserData } from "core/api";
-import { createTick, readUserTick, updateTick } from "database/db";
+import { createTick, readUserTick, updateTick } from "database/tick";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 
