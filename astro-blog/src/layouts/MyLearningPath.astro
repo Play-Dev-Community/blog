@@ -1,11 +1,11 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import Layout from "@layouts/Layout.astro";
-import Main from "@layouts/Main.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import Pagination from "@components/Pagination.astro";
 import PostPrivate from "@components/PostPrivate";
+import SkeletonHeader from '@components/SkeletonHeader/SkeletonHeader';
 import { SITE } from "@config";
 
 export interface Props {
@@ -19,7 +19,13 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
 
 <Layout title={`Minha Trilha | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Minha Trilha" pageDesc="Todas as aulas da sua trilha personalizada">
+  
+  <main id="main-content">
+    <SkeletonHeader
+      title="Minha Trilha"
+      transitionName="minha-trilha"
+      desc='Todas as aulas da sua trilha personalizada'
+      client:load />
     {
       paginatedPosts.length &&
 
@@ -32,13 +38,14 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
         }
       </ul>
     }
+  </main>
 
-    <!-- {
-      !paginatedPosts.length &&
-      <p>Sua trilha ainda está sendo construída.</p>
-    } -->
-
-  </Main>
+  <style>
+    #main-content {
+      @apply mt-7 mx-auto w-full max-w-7xl px-4 pb-4;
+    }
+  </style>
+  
 
   <Pagination
     {currentPage}
@@ -49,3 +56,12 @@ const { currentPage, totalPages, paginatedPosts } = Astro.props;
 
   <Footer noMarginTop={totalPages > 1} />
 </Layout>
+
+<script>
+  import { getUserData } from "@utils/user.utils";
+  import { navigate } from "astro:transitions/client";
+  
+  const user = getUserData();
+
+  if (!user) navigate('404');
+</script>

@@ -1,0 +1,107 @@
+---
+
+---
+
+<form class="feedback-form">
+  <div>
+    <label for="member_id">Member ID:</label>
+    <input type="text" id="member_id" name="member_id" required />
+  </div>
+
+  <div>
+    <label for="author">Author:</label>
+    <input type="text" id="author" name="author" required />
+  </div>
+
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required />
+  </div>
+
+  <div>
+    <label for="text">Feedback:</label>
+    <textarea id="text" name="text" required></textarea>
+  </div>
+
+  <div>
+    <label for="support_link">Support Link (optional):</label>
+    <input type="url" id="support_link" name="support_link" />
+  </div>
+
+  <button type="submit">Submit Feedback</button>
+</form>
+
+<style>
+  .feedback-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .feedback-form div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feedback-form label {
+    font-weight: bold;
+  }
+
+  .feedback-form input,
+  .feedback-form textarea {
+    padding: 8px;
+    font-size: 1rem;
+  }
+
+  .feedback-form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  import { getUserData } from "@utils/user.utils";
+  import { navigate } from "astro:transitions/client";
+
+  const user = getUserData();
+
+  if (!user || user.id !== "368226888793063435") navigate("404");
+</script>
+
+<script>
+  import { createFeedback } from "@api/feedbacks";
+
+  interface Feedback {
+    member_id: string;
+    author: string;
+    title: string;
+    text: string;
+    datetime: number;
+    support_link?: string;
+  }
+
+  // Função para manipular o envio do formulário
+  async function handleSubmit(event: Event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target as HTMLFormElement);
+    const feedback: Feedback = {
+      member_id: formData.get("member_id") as string,
+      author: formData.get("author") as string,
+      title: formData.get("title") as string,
+      text: formData.get("text") as string,
+      datetime: Date.now(),
+      support_link: (formData.get("support_link") as string) || undefined,
+    };
+
+    await createFeedback(feedback);
+
+    console.log("Feedback Submitted:", feedback);
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    const form = document.querySelector(".feedback-form") as HTMLFormElement;
+    form.addEventListener("submit", handleSubmit);
+  });
+</script>

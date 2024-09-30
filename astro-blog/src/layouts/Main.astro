@@ -16,11 +16,15 @@ interface ArrayTitleProp {
 export type Props = StringTitleProp | ArrayTitleProp;
 
 const { props } = Astro;
+const { breadcrumb = true } = props as ArrayTitleProp;
 ---
-
-<Breadcrumbs />
-<main id="main-content">
+{ 
+  breadcrumb &&
+  <Breadcrumbs />
+}
+<main id="main-content" class={!breadcrumb ? 'mt-7' : null}>
   {
+
     "titleTransition" in props ? (
       <h1>
         {props.pageTitle[0]}
@@ -32,7 +36,9 @@ const { props } = Astro;
       <h1>{props.pageTitle}</h1>
     )
   }
+
   <p>{props.pageDesc}</p>
+
   <slot />
 </main>
 

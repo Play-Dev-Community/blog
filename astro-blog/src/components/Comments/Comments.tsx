@@ -1,14 +1,13 @@
 // Comments.tsx
 import React, { useState, useEffect } from 'react';
 
-import type { DiscordUserData } from 'core/api';
-import { getUserAvatar, getUserData } from '@utils/user.utils';
-import { createComment, readComments } from 'database/comments';
+import type { DiscordUserData } from '@api/discord';
+import { getUserData } from '@utils/user.utils';
+import { createComment, readComments } from '@api/comments';
 
 import './Comments.scss';
 
 interface Comment {
-  id: string;
   member_id: string;
   author: string;
   text: string;
@@ -28,7 +27,6 @@ const Comments: React.FC<Props> = ({ post }) => {
 
   useEffect(() => {
     const storedUser: DiscordUserData = getUserData();
-    const storedAvatar = getUserAvatar();
 
     fetchComments();
 
@@ -50,7 +48,6 @@ const Comments: React.FC<Props> = ({ post }) => {
     if (newComment.trim() === '') return;
 
     createComment({
-      id: '1',
       member_id: memberID!,
       author: memberName!,
       text: newComment,
@@ -90,7 +87,7 @@ const Comments: React.FC<Props> = ({ post }) => {
         { comments.length ?
           comments.map(comment => 
             (
-              <div key={comment.id}>
+              <div key={`${comment.member_id}_${comment.pubDatetime}`}>
                 <p>{comment.text}</p>
                 <small className='opacity-50'>{comment.author} • {comment.pubDatetime.toString()}</small>
               </div>

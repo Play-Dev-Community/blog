@@ -8,29 +8,14 @@ import Hr from "@components/Hr.astro";
 import Feature from "@components/Feature";
 import Post from "@components/Post";
 import getSortedPosts from "@utils/getSortedPosts";
-import { SOCIALS } from "@config";
 import BannerCookies from "@components/BannerCookies.astro";
+import WelcomeUser from '@components/WelcomeUser/WelcomeUser';
 
 const posts = await getCollection("blog");
-
-interface DiscordUserData {
-  avatar: string;
-  discriminator: string;
-  id: string;
-  username: string;
-  global_name: string;
-  accent_color: number;
-  banner_color: string;
-  flags: number;
-  locale: string;
-  premium_type: 0 | 1 | 2;
-}
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
-
-const socialCount = SOCIALS.filter(social => social.active).length;
 ---
 
 <Layout>
@@ -70,6 +55,8 @@ const socialCount = SOCIALS.filter(social => social.active).length;
 
     <Hr /> -->
 
+    <WelcomeUser client:load />
+
     {
       featuredPosts.length > 0 && (
         <>
@@ -96,7 +83,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
           <ul>
             {recentPosts.map(
               ({ data, slug }, index) =>
-                index < 4 && (
+                index < 7 && (
                   <Post
                     href={`/posts/${slug}/`}
                     frontmatter={data}
@@ -109,7 +96,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     }
 
     {
-      sortedPosts.length > 5 &&
+      sortedPosts.length > 8 &&
       <div class="all-posts-btn-wrapper">
         <LinkButton href="/posts/">
           Todas as Postagens

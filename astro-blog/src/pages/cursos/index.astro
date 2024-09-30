@@ -1,0 +1,17 @@
+---
+import { getCollection } from "astro:content";
+import Courses from "@layouts/Courses.astro";
+import getSortedCourses from "@utils/getSortedCourses";
+import getPagination from "@utils/getPagination";
+
+const courses = await getCollection("courses");
+const sortedCourses = getSortedCourses(courses);
+
+const pagination = getPagination({
+  posts: sortedCourses,
+  page: 1,
+  isIndex: true
+});
+---
+
+<Courses {...pagination} />

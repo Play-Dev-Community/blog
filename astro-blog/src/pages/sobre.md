@@ -4,13 +4,6 @@ title: "Sobre a Play Dev"
 ---
 
 <style>
-  @import 'animate.css';
-
-  /* .dev-img {
-    animation: jackInTheBox;
-    animation-duration: 1s;
-  } */
-
 @media screen and (min-width: 640px) {
   .jello:hover {
     cursor: pointer;
@@ -56,7 +49,6 @@ title: "Sobre a Play Dev"
     display: flex;
   }
 }
-
 </style>
 
 A Play Dev é uma comunidade vibrante e acolhedora criada para reunir **desenvolvedores**, **designers**, **gamers**, **traders** e **entusiastas da tecnologia através da programação**. Nossa missão é proporcionar um ambiente colaborativo onde você pode aprender, compartilhar conhecimentos e se conectar com outros profissionais apaixonados pelo mundo digital.
@@ -98,4 +90,4 @@ Organizamos diversos eventos, competições e desafios para manter a comunidade 
 </div>
 
 ## Criado por Gabriel Moodlight
-Desenvolvedor Front-end aspirante a Full Cycle, UI/UX e Mentor Web, <br class="hidden sm:block"/> dedicando-se a transmitir ensinamentos de forma digna por meio de código e pensamento criativo </>
+Desenvolvedor Full Cycle e Mentor Web, aspirante a UI/UX, <br class="hidden sm:block"/> dedicando-se a transmitir ensinamentos de forma digna por meio de código e pensamento criativo </>

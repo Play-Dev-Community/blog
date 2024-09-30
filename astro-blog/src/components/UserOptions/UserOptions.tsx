@@ -6,14 +6,20 @@ import './UserOptions.scss';
 interface Props {
   username: any;
   isStudent: any;
-  ['client:load']: boolean;
+  devcoins?: number;
 }
 
 const UserOptions: React.FC<Props> = ({ username, isStudent }) => {
 
+  // const formatDevCoins = (coins: string | number) => {
+  //   return `${String(coins).split(/(?=(?:...)*$)/).join('.')} DevCoins`;
+  // }
+
   return (
     <div className="user-options flex justify-end items-start flex-col">
-      <h2 className='w-full'>Olá, {username}</h2>
+      <h2 className='w-full font-bold tracking-wide'>{username}</h2>
+
+      {/* { devcoins && formatDevCoins(devcoins) } */}
 
       {
         
@@ -24,17 +30,17 @@ const UserOptions: React.FC<Props> = ({ username, isStudent }) => {
             {
               isStudent &&
               <Fragment>
-                <a view-transition-name='minha-trilha' href="/minha-trilha">
+                <a href="/minha-trilha">
 
                   <li>🛤️ Minha Trilha </li>
 
                 </a>
-                
-                {/* <a href="/meus-feedbacks">
 
-                  <li>🛤️ Meus Feedbacks </li>
+                <a href="/meus-feedbacks">
 
-                </a> */}
+                  <li>🚩 Meus Feedbacks </li>
+
+                </a>
               </Fragment>
             }
 

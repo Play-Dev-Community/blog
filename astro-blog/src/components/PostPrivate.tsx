@@ -6,7 +6,7 @@ import { getUserData } from "@utils/user.utils";
 
 export interface PostPrivateProps {
   href?: string;
-  frontmatter: CollectionEntry<"blog">["data"];
+  frontmatter: CollectionEntry<"private">["data"];
   secHeading?: boolean;
 }
 

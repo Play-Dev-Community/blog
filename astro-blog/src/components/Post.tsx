@@ -13,7 +13,7 @@ export default function Post({ href, frontmatter, secHeading = true }: Props) {
 
   const headerProps = {
     style: { viewTransitionName: slugifyStr(title) },
-    className: "text-lg font-bold transition ease-in decoration-dashed hover:underline max-w-[100%] whitespace-nowrap overflow-hidden text-ellipsis",
+    className: "text-lg font-bold transition ease-in hover:translate-x-[5px] max-w-[100%] whitespace-nowrap overflow-hidden text-ellipsis",
   };
 
   return (
@@ -21,7 +21,7 @@ export default function Post({ href, frontmatter, secHeading = true }: Props) {
       <header className="flex flex-col sm:items-center sm:gap-2 sm:flex-row">
         <a
           href={href}
-          className="inline-block text-lg text-skin-accent decoration-dashed underline-offset-4 focus-visible:no-underline focus-visible:underline-offset-0 visited:text-skin-accent-visited max-w-[80%]sm:max-w-[60%]"
+          className="inline-block text-lg text-skin-accent visited:text-skin-accent-visited max-w-[80%]sm:max-w-[60%]"
         >
           {secHeading ? (
             <h2 {...headerProps}>{title}</h2>

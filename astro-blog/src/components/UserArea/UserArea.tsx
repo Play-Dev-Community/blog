@@ -1,19 +1,20 @@
-export const prerender = true;
-
 import React, { useEffect, useState } from 'react';
 import discordIcon from '@icons/discord.svg';
-import UserOptions from './UserOptions';
+import UserOptions from '../UserOptions/UserOptions';
 import { getUserAvatar, getUserData, getUserRoles } from '@utils/user.utils';
-import type { DiscordUserData } from 'core/api';
-import { Storage } from '../core/storage';
+import type { DiscordUserData } from '@api/discord';
+import { Storage } from '@core/storage';
 import { EStorage } from 'models/storage.model';
 
 import './UserArea.scss';
 
-interface UserInfoProps {}
+interface UserInfoProps {
+  // devcoins?: number;
+}
 
-const UserArea: React.FC<UserInfoProps> = () => {
+const UserArea: React.FC<UserInfoProps> = ({ }) => {
   const [name, setName] = useState<string | null>(null);
+  const [memberID, setMemberID] = useState<string | null>(null);
   const [avatar, setAvatar] = useState<string | null>(null);
   const [optionsVisible, setOptionsVisible] = useState<boolean>(false);
   const [readyToRender, setReadyToRender] = useState<boolean>(false);
@@ -30,7 +31,7 @@ const UserArea: React.FC<UserInfoProps> = () => {
     const storedAvatar = getUserAvatar();
 
     if (storedRoles) {
-      setStudent(storedRoles.includes('1237165303616634963'));
+      setStudent(storedRoles.includes(import.meta.env.PUBLIC_DW_ID));
     }
 
     if (!getUserAvatar()) {
@@ -38,13 +39,16 @@ const UserArea: React.FC<UserInfoProps> = () => {
         const avatar = `https://cdn.discordapp.com/avatars/${storedUser.id}/${storedUser.avatar}`;
 
         setName(storedUser.global_name);
+        setMemberID(storedUser.id);
         setAvatar(avatar);
+
         new Storage().setData(EStorage.AVATAR, avatar);
       }
     } else {
       if (storedUser) {
         setName(storedUser.global_name);
         setAvatar(storedAvatar);
+        setMemberID(storedUser.id);
       }
     }
 
@@ -95,7 +99,7 @@ const UserArea: React.FC<UserInfoProps> = () => {
         <img className='image' src={avatar!} alt={name!} />
       </div>
 
-      { optionsVisible && <UserOptions username={name!} isStudent={isStudent} client:load /> }
+      { optionsVisible && <UserOptions username={name!} isStudent={isStudent} /> }
 
     </div>
   );

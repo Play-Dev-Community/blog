@@ -22,7 +22,7 @@ const getMe = async (headers: any) => {
 
 const getMeRoles = async (headers: any) => {
 
-  const res = await fetch(`https://discord.com/api/users/@me/guilds/1200296192890916865/member`, headers);
+  const res = await fetch(`https://discord.com/api/users/@me/guilds/${import.meta.env.PUBLIC_GUILD_ID}/member`, headers);
 
   const roles = await res.json();
 

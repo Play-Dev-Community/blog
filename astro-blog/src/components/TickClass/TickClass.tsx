@@ -1,27 +1,14 @@
 import { getUserData } from "@utils/user.utils";
-import type { DiscordUserData } from "core/api";
-import { createTick, readUserTick, updateTick } from "database/tick";
+import type { DiscordUserData } from "@api/discord";
+import { createTick, readUserTick, updateTick } from "@api/ticks";
 import React from "react";
 import { useEffect, useRef, useState } from "react";
+
+import './TickClass.scss';
 
 interface Props {
   slugClass: any;
 }
-
-const formatTextWithLineBreaks = (text: string) => {
-  return text.split('\n').map((line, index) => (
-    <React.Fragment key={index}>
-      {line}
-      <br />
-    </React.Fragment>
-  ));
-};
-
-const TextWithLineBreaks = ({ text }: { text: string }) => (
-  <>
-    {formatTextWithLineBreaks(text)}
-  </>
-);
 
 export default function TickClass({ slugClass }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -118,51 +105,8 @@ export default function TickClass({ slugClass }: Props) {
       : 'Quando terminar de estudar esta aula, clique no botão acima para marcá-la como concluída.');
   };
 
-  const css = `
-    .tick-container {
-      align-self: center;
-      width: 60px;
-      border: 2px solid #14b8c0;
-      border-radius: 20px;
-      padding: 3px;
-      cursor: pointer;
-      transition: 0.3s opacity;
-    }
-
-    .tick-container.disabled {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .tick-toggle {
-      width: 25px;
-      height: 25px;
-      border-radius: 100%;
-      transition: 0.3s all;
-      background-color: #14b8c0;
-    }
-
-    .tick-input:checked + .tick-toggle {
-      opacity: 1;
-      transform: translateX(100%);
-    }
-
-    .tick-toggle {
-      opacity: 0.3;
-    }
-
-    .tick-text {
-      font-weight: bold;
-      font-size: 18px;
-    }
-  `;
-
   return (
     <>
-      <style>
-        {css}
-      </style>
-
       <div className="flex flex-col gap-2 sm:max-w-[30%]">
         <div className="flex items-center justify-between gap-5">
           <span className="tick-text">{tickTitle}</span>

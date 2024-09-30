@@ -2,11 +2,19 @@
 import { LOGO_IMAGE, SITE } from "@config";
 import Hr from "./Hr.astro";
 import LinkButton from "./LinkButton.astro";
-import { Image } from "astro:assets";
-import UserArea from "./UserArea";
+import UserArea from "./UserArea/UserArea";
+import { GET } from "../pages/api/devcoins";
+import { Icon } from "astro-icon/components";
 
 export interface Props {
-  activeNav?: "posts" | "tags" | "about" | "search" | "chat" | "instructors";
+  activeNav?:
+    | "posts"
+    | "tags"
+    | "about"
+    | "search"
+    | "chat"
+    | "instructors"
+    | "courses";
   isAuth?: boolean;
 }
 
@@ -14,26 +22,26 @@ const { activeNav, isAuth } = Astro.props;
 ---
 
 <style>
-  @import 'animate.css';
+  @import "animate.css";
 
   .nav-container {
     @apply mx-auto flex max-w-7xl flex-col items-center justify-between sm:flex-row;
   }
 
   .top-nav-wrap {
-    @apply relative flex w-full items-start justify-between sm:items-center py-2 sm:py-4 transition-all ease-in;
+    @apply relative flex w-full items-start justify-between py-2 transition-all ease-in sm:items-center sm:py-4;
   }
 
   .logo {
-    @apply absolute sm:py-1 text-xl font-semibold sm:static sm:text-2xl;
+    @apply absolute text-xl font-semibold sm:static sm:py-1 sm:text-2xl;
     letter-spacing: -2px;
   }
   .logo img {
-    @apply transition-all ease-in max-w-10 p-0 ml-1 sm:max-w-16;
+    @apply ml-1 max-w-10 p-0 transition-all ease-in sm:max-w-16;
   }
 
   .logo .logo-letter {
-    @apply hidden sm:inline-block first-of-type:ml-2;
+    @apply hidden first-of-type:ml-2 sm:inline-block;
     transition-duration: 500ms;
     transition-timing-function: ease-out;
     transition-property: all;
@@ -49,7 +57,7 @@ const { activeNav, isAuth } = Astro.props;
   }
 
   .hamburger-menu {
-    @apply self-end p-2 z-50 sm:hidden;
+    @apply z-50 self-end p-2 sm:hidden;
   }
   .hamburger-menu svg {
     @apply h-6 w-6 scale-125 fill-skin-base;
@@ -107,8 +115,8 @@ const { activeNav, isAuth } = Astro.props;
 
   @media screen and (max-width: 640px) {
     #menu-items {
+      display: flex;
       margin-top: 30px;
-      display: none;
       flex-direction: column-reverse;
       justify-content: flex-end;
       margin: 0;
@@ -118,15 +126,15 @@ const { activeNav, isAuth } = Astro.props;
       width: 100%;
       height: 100vh;
       padding: 20px;
-      animation: fadeOutRight forwards;
-      animation-duration: 0.5s;
+      transform: translateX(100%);
+      opacity: 0;
+      transition: 0.5s all;
       @apply bg-skin-tooltip text-skin-base;
     }
 
     #menu-items.visible {
-      display: flex;
-      animation: fadeInRight;
-      animation-duration: 0.5s;
+      transform: translateX(0);
+      opacity: 1;
     }
 
     .hamburger-menu.opened .menu-icon .line {
@@ -141,25 +149,31 @@ const { activeNav, isAuth } = Astro.props;
       display: none;
     }
   }
+</style>
 
+<style>
+  .logo-svg {
+    @apply h-[40px] w-[40px] text-skin-accent sm:h-[64px] sm:w-[64px];
+  }
 </style>
 
 <!-- <iframe src="https://e.widgetbot.io/channels/1200296192890916865/1212450831178408036" allow="clipboard-write; fullscreen" height="600" width="800"></iframe> -->
-
-<header class="w-full sticky top-0 z-50 bg-skin-fill">
+<header class="sticky top-0 z-50 w-full bg-skin-fill">
   <div class="nav-container">
     <div class="top-nav-wrap" smooth-scroll>
       <a href="/" class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable ? (
             <div class="flex items-center">
-              <Image
-                src={`/assets/${LOGO_IMAGE.svg ? "logo.svg" : "logo.png"}`}
+              {/* <Image
+                src={`/assets/${LOGO_IMAGE.svg ? "logo2.svg" : "logo.png"}`}
                 alt={SITE.title}
                 width={LOGO_IMAGE.width}
                 height={LOGO_IMAGE.height}
                 smooth-scroll
-              />
+              /> */}
+
+              <Icon name="logo" class="logo-svg" />
 
               <span class="logo-letter">P</span>
               <span class="logo-letter">l</span>
@@ -168,7 +182,6 @@ const { activeNav, isAuth } = Astro.props;
               <span class="logo-letter">D</span>
               <span class="logo-letter">e</span>
               <span class="logo-letter">v</span>
-
             </div>
           ) : (
             SITE.title
@@ -207,11 +220,19 @@ const { activeNav, isAuth } = Astro.props;
               Postagens
             </a>
           </li>
+
           <li>
             <a href="/tags/" class={activeNav === "tags" ? "active" : ""}>
               Tags
             </a>
           </li>
+
+          <!-- <li>
+            <a href="/cursos/" class={activeNav === "courses" ? "active" : ""}>
+              Cursos
+            </a>
+          </li> -->
+
           <li>
             <a href="/sobre/" class={activeNav === "about" ? "active" : ""}>
               Sobre
@@ -227,7 +248,9 @@ const { activeNav, isAuth } = Astro.props;
               Nosso Chat
             </a>
           </li> -->
-          <div class="flex flex-row justify-center gap-8 mt-12 mb-2 sm:mt-0 sm:mb-0 sm:gap-4">
+          <div
+            class="mb-2 mt-12 flex flex-row justify-center gap-8 sm:mb-0 sm:mt-0 sm:gap-4"
+          >
             <li class="flex">
               <LinkButton
                 href="/search/"
@@ -237,9 +260,7 @@ const { activeNav, isAuth } = Astro.props;
                 ariaLabel="search"
                 title="Pesquisar"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  
+                <svg xmlns="http://www.w3.org/2000/svg"
                   ><path
                     d="M19.023 16.977a35.13 35.13 0 0 1-1.367-1.384c-.372-.378-.596-.653-.596-.653l-2.8-1.337A6.962 6.962 0 0 0 16 9c0-3.859-3.14-7-7-7S2 5.141 2 9s3.14 7 7 7c1.763 0 3.37-.66 4.603-1.739l1.337 2.8s.275.224.653.596c.387.363.896.854 1.384 1.367l1.358 1.392.604.646 2.121-2.121-.646-.604c-.379-.372-.885-.866-1.391-1.36zM9 14c-2.757 0-5-2.243-5-5s2.243-5 5-5 5 2.243 5 5-2.243 5-5 5z"
                   ></path>
@@ -250,10 +271,11 @@ const { activeNav, isAuth } = Astro.props;
 
             <li>
               {
-                !isAuth &&
-                <div class="user-area flex">
-                  <UserArea client:load />
-                </div>
+                !isAuth && (
+                  <div class="user-area flex">
+                    <UserArea client:load />
+                  </div>
+                )
               }
             </li>
 
@@ -266,11 +288,15 @@ const { activeNav, isAuth } = Astro.props;
                 aria-live="polite"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg">
-                  <path d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z" />
+                  <path
+                    d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z"
+                  ></path>
                 </svg>
-    
+
                 <svg xmlns="http://www.w3.org/2000/svg" id="sun-svg">
-                  <path d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z" />
+                  <path
+                    d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z"
+                  ></path>
                 </svg>
               </button>
             </li>
@@ -289,33 +315,34 @@ const { activeNav, isAuth } = Astro.props;
 </header>
 
 <script>
-    let currentHeight: number;
+  let currentHeight: number;
 
-    function toggleMenuHamburguer() {
-      document.getElementById('menu-items')?.classList.toggle('visible');
-      document.querySelector('.hamburger-menu')?.classList.toggle('opened');
-    }
+  function toggleMenuHamburguer() {
+    document.getElementById("menu-items")?.classList.toggle("visible");
+    document.querySelector(".hamburger-menu")?.classList.toggle("opened");
+  }
 
-    function smoothHeightScroll() {
-      const smoothClass = 'smooth-scroll';
+  function smoothHeightScroll() {
+    const smoothClass = "smooth-scroll";
 
-      if (!currentHeight) currentHeight = 0;
+    if (!currentHeight) currentHeight = 0;
 
-      document.querySelectorAll('*[smooth-scroll]').forEach(el => {
-        if (!window.scrollY && el.classList.contains(smoothClass)) {
-          el.classList.remove(smoothClass);
-        }
+    document.querySelectorAll("*[smooth-scroll]").forEach(el => {
+      if (!window.scrollY && el.classList.contains(smoothClass)) {
+        el.classList.remove(smoothClass);
+      }
 
-        if (window.scrollY && !el.classList.contains(smoothClass)) {
-          el.classList.add(smoothClass);
-        }
-      });
+      if (window.scrollY && !el.classList.contains(smoothClass)) {
+        el.classList.add(smoothClass);
+      }
+    });
+  }
 
-    }
-
-  document.addEventListener('astro:page-load', () => {
+  document.addEventListener("astro:page-load", () => {
     document.addEventListener("scroll", smoothHeightScroll);
-    document.querySelector('button.hamburger-menu')?.addEventListener('click', toggleMenuHamburguer);
+    document
+      .querySelector("button.hamburger-menu")
+      ?.addEventListener("click", toggleMenuHamburguer);
   });
   // document.querySelector('button.hamburger-menu')?.removeEventListener('click', toggleMenuHamburguer);
 </script>

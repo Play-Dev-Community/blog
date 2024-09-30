@@ -60,6 +60,3 @@ title: "Instrutores da Play Dev"
 ## Gabriel Moodlight
 
 lorem ipsum
-
-
-## Jean Branco

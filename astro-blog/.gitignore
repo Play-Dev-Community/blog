@@ -35,3 +35,7 @@ pnpm-debug.log*
 .pnp.*
 .vercel
 .bkp
+
+src/content/private
+
+.bkp

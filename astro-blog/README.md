@@ -120,7 +120,7 @@ You can easily add your [Google Site Verification HTML tag](https://support.goog
 
 ```bash
 # in your environment variable file (.env)
-PUBLIC_GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
+GOOGLE_SITE_VERIFICATION=your-google-site-verification-value
 ```
 
 ## 🧞 Commands

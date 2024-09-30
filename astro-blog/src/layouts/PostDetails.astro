@@ -7,8 +7,8 @@ import Datetime from "@components/Datetime";
 import type { CollectionEntry } from "astro:content";
 import { slugifyStr } from "@utils/slugify";
 import ShareLinks from "@components/ShareLinks.astro";
-import Comments from "@components/Comments/Comments";
 import { SITE } from "@config";
+import Comments from "@components/Comments/Comments";
 
 export interface Props {
   post: CollectionEntry<"blog">;
@@ -238,3 +238,11 @@ const layoutProps = {
   }
   backToTop();
 </script>
+
+<!-- <script src="https://utteranc.es/client.js"
+        repo="slug"
+        [issue-term]="pathname"
+        theme="preferred-color-scheme"
+        crossorigin="anonymous"
+        async>
+</script> -->

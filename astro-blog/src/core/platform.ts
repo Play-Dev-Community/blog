@@ -15,7 +15,7 @@ export interface DeviceState {
   isPortraitOrientation: () => boolean
 }
 
-const userAgent: string = navigator.userAgent || navigator.vendor || (window as any).opera || undefined
+const userAgent: string = navigator.userAgent || (window as any).opera || undefined
 
 // Device typology
 

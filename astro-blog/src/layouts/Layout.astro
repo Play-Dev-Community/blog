@@ -2,6 +2,7 @@
 import { LOCALE, SITE } from "@config";
 import "@styles/base.css";
 import { ViewTransitions } from "astro:transitions";
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
@@ -93,6 +94,9 @@ const socialImageURL = new URL(
       rel="stylesheet"
     />
 
+    <!-- DevIcon -->
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+
     <!-- Config PWA
     <link rel="manifest" href={`${SITE.website}./manifest.json`} /> -->
     <!-- ios support -->
@@ -117,6 +121,9 @@ const socialImageURL = new URL(
 
   </head>
   <body>
+
+    <SpeedInsights />
+
     <slot />
 
     <script is:inline src="/toggle-theme.js"></script>
@@ -124,7 +131,7 @@ const socialImageURL = new URL(
   </body>
 </html>
 
-<script>
+<!-- <script>
 import confetti from "canvas-confetti";
 
 const randomInRange = (min:number, max:number) => {
@@ -202,4 +209,4 @@ const randomInRange = (min:number, max:number) => {
     // }
     // window.addEventListener('click', onClickOutside);
   // });
-</script>
+</script> -->

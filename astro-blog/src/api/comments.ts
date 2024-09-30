@@ -3,7 +3,6 @@ import { equalTo, get, orderByChild, push, query, ref, remove, set, update } fro
 
 // Interface Comment
 interface Comment {
-  id: string;
   member_id: string;
   author: string;
   text: string;

@@ -10,6 +10,7 @@ const blog = defineCollection({
       modDatetime: z.date().optional().nullable(),
       title: z.string(),
       featured: z.boolean().optional(),
+      course: z.string().optional(),
       draft: z.boolean().optional(),
       tags: z.array(z.string()).default(["outros"]),
       ogImage: image()

@@ -1,0 +1,44 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+
+import getPageNumbers from "@utils/getPageNumbers";
+import getPagination from "@utils/getPagination";
+
+import getSortedCourses from '@utils/getSortedCourses';
+
+import CourseDetails from '@layouts/CourseDetails.astro';
+import Courses from '@layouts/Courses.astro';
+
+export interface Props {
+  course: CollectionEntry<"courses">;
+}
+
+export async function getStaticPaths() {
+  const courses = await getCollection("courses", ({ data }) => !data.draft && !data.students?.length);
+
+  const courseResult = courses.map(course => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+
+  const pagePaths = getPageNumbers(courses.length).map(pageNum => ({
+    params: { slug: String(pageNum) },
+  }));
+
+  return [...courseResult, ...pagePaths];
+}
+
+const { slug } = Astro.params;
+const { course } = Astro.props;
+
+const courses = await getCollection("courses");
+
+const sortedCourses = getSortedCourses(courses);
+
+const pagination = getPagination({
+  posts: sortedCourses,
+  page: slug
+});
+---
+
+{course ? <CourseDetails course={course} /> : <Courses {...pagination} />}
