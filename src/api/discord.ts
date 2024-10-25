@@ -10,23 +10,3 @@ export interface DiscordUserData {
   locale: string;
   premium_type: 0 | 1 | 2;
 }
-
-const getMe = async (headers: any) => {
-
-  const res = await fetch('https://discord.com/api/users/@me', headers);
-
-  const user: Partial<DiscordUserData> = await res.json();
-
-  return user;
-}
-
-const getMeRoles = async (headers: any) => {
-
-  const res = await fetch(`https://discord.com/api/users/@me/guilds/${import.meta.env.PUBLIC_GUILD_ID}/member`, headers);
-
-  const roles = await res.json();
-
-  return roles.roles;
-}
-
-export { getMe as getUserDetails, getMeRoles as getMemberRoles };

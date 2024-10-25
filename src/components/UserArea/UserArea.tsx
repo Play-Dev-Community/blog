@@ -9,7 +9,6 @@ import { EStorage } from 'models/storage.model';
 import './UserArea.scss';
 
 interface UserInfoProps {
-  // devcoins?: number;
 }
 
 const UserArea: React.FC<UserInfoProps> = ({ }) => {
@@ -21,7 +20,6 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
   const [isStudent, setStudent] = useState<boolean>(false);
 
   useEffect(() => {
-
     setReadyToRender(true);
 
     if (!getUserData() || !getUserRoles()) return;
@@ -68,7 +66,7 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
     console.log('URL', convertURL());
 
     const
-    clientID = '1192987982257475675',
+    clientID = '1278932305406197842',
     type = 'token',
     URI = convertURL(),
     scope = 'identify+guilds.members.read+guilds';
@@ -99,7 +97,7 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
         <img className='image' src={avatar!} alt={name!} />
       </div>
 
-      { optionsVisible && <UserOptions username={name!} isStudent={isStudent} /> }
+      { optionsVisible && <UserOptions data={ { id: memberID, isStudent, username: name } } /> }
 
     </div>
   );

@@ -1,4 +1,4 @@
-import database from "core/firebase";
+import { database } from "@core/firebase";
 import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from "firebase/database";
 
 const createTick = async (data: any) => {

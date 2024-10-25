@@ -1,6 +1,6 @@
 import type { ReactionsFeedback } from "@components/FeedbackReactionBar/FeedbackReactionBar.enum";
 import { getUserData } from "@utils/user.utils";
-import database from "core/firebase";
+import { database } from "@core/firebase";
 import { equalTo, get, orderByChild, push, query, ref, set } from "firebase/database";
 
 // Interface Feedback

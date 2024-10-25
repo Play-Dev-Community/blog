@@ -1,49 +1,83 @@
-import { getMemberRoles, getUserDetails } from "@api/discord";
 import { EStorage } from "models/storage.model";
 import { Storage } from './storage';
 import { atom } from "nanostores";
-
-import { EmailAuthProvider } from "firebase/auth";
 import { navigate } from "astro:transitions/client";
+import { signInWithCustomToken } from "firebase/auth";
+import { auth } from "./firebase";
+import confetti from "canvas-confetti";
+
+import { delay, from } from 'rxjs';
 
 export const isLoggedIn = atom(false);
 
 let storage: Storage | null = new Storage();
-let currentToken: string | null;
 let isLogged!: boolean;
 
-function getHeaders(token: string) {
-  return {
-    headers: {
-      authorization: `Bearer ${token}`
+async function signInDiscord(accessToken: string) {
+  try {
+    // 2. Fetch custom token with Discord access token
+    const authDiscord = await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/discord`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `${accessToken}`
+      }
+    });
+
+    if (!authDiscord.ok) {
+      throw new Error(`Backend request failed with status: ${authDiscord.status}`);
     }
+
+    const authDiscordData = await authDiscord.json(); // Parse JSON response
+    const customToken = authDiscordData.token;
+
+    await signInWithCustomToken(auth, customToken).then(async (userCredential) => {
+
+      storage!.setData(EStorage.TOKEN, await userCredential.user.getIdToken());
+      storage!.setData(EStorage.MEMBER, authDiscordData.data);
+      storage!.setData(EStorage.ROLES, authDiscordData.roles);
+
+      isLogged = true;
+      isLoggedIn.set(true);
+
+      document.querySelector('.auth-title')!.classList.add('success');
+      document.querySelector('.auth-title')!.textContent = 'Sucesso!';
+
+      document.querySelector('.auth-redirect')!.remove();
+
+      const colors = ['#14b8c0', '#ffffff'];
+
+      from([
+        confetti({
+          particleCount: 100,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          colors: colors
+        }),
+        confetti({
+          particleCount: 100,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          colors: colors
+        })
+      ])
+        .pipe(
+          delay(2000)
+        )
+        .subscribe(r => {
+          navigate('/');
+        });
+
+    });
+
+  } catch (error) {
+    console.error("Erro ao autenticar via Discord:", error);
   }
-}
-
-export async function getUser(save = false, token: string): Promise<any> {
-  const userData = await getUserDetails(getHeaders(token));
-
-  if (userData && save) {
-    storage!.setData(EStorage.MEMBER, userData);
-    isLogged = true;
-    isLoggedIn.set(true);
-  }
-
-  return userData;
-}
-
-export async function getRoles(save = false, token: string): Promise<any> {
-  const memberRolesData = await getMemberRoles(getHeaders(token));
-
-  if (memberRolesData && save) {
-    storage!.setData(EStorage.ROLES, memberRolesData);
-  }
-
-  return memberRolesData;
 }
 
 export function logOut() {
-  currentToken = null;
   isLogged = false;
   isLoggedIn.set(false);
 
@@ -58,10 +92,5 @@ export function logOut() {
 }
 
 export async function startSession(accessToken: string) {
-  // const provider = firebase.auth.OAuthProvider('discord.com');
-  // const result = await firebase.auth().signInWithPopup(provider);
-  // const token = await result.user.getIdToken(); // JWT token
-
-  await getUser(true, accessToken);
-  await getRoles(true, accessToken);
+  await signInDiscord(accessToken);
 }

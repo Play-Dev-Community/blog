@@ -1,34 +1,53 @@
 import { logOut } from 'core/session';
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import './UserOptions.scss';
+import { getDevCoins } from '@api/coins';
+import devcoinIcon from '@icons/devcoin.png';
+
+import { from } from 'rxjs';
 
 interface Props {
-  username: any;
-  isStudent: any;
-  devcoins?: number;
+  data: {
+    id: any;
+    username: any;
+    isStudent: any;
+  }
 }
 
-const UserOptions: React.FC<Props> = ({ username, isStudent }) => {
+const UserOptions: React.FC<Props> = ({ data }) => {
+  const [devCoins, setDevcoins] = useState<number | null>(null);
 
-  // const formatDevCoins = (coins: string | number) => {
-  //   return `${String(coins).split(/(?=(?:...)*$)/).join('.')} DevCoins`;
-  // }
+  useEffect(() => {
+    from(getDevCoins(data.id))
+      .subscribe(r => {
+        setDevcoins(r);
+      });
+  }, [data.id])
+
+  const formatDevCoins = (coins: string | number) => {
+    return `${String(coins).split(/(?=(?:...)*$)/).join('.')} DevCoins`;
+  }
 
   return (
     <div className="user-options flex justify-end items-start flex-col">
-      <h2 className='w-full font-bold tracking-wide'>{username}</h2>
+      <h2 className='w-full font-bold tracking-wide'>{data.username}</h2>
 
-      {/* { devcoins && formatDevCoins(devcoins) } */}
+      {devCoins && (
+        <span className='flex gap-2'>
+          <img src={devcoinIcon.src} width={25} />
+          {formatDevCoins(devCoins)}
+        </span>
+      )}
 
       {
-        
+
         <Fragment>
           <hr />
 
           <ul className='flex flex-col items-start gap-3 sm:gap-0'>
             {
-              isStudent &&
+              data.isStudent &&
               <Fragment>
                 <a href="/minha-trilha">
 

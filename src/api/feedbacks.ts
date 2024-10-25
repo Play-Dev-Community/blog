@@ -1,4 +1,4 @@
-import database from "core/firebase";
+import { database } from "@core/firebase";
 import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from "firebase/database";
 
 // Interface Feedback
@@ -48,28 +48,4 @@ const readFeedbacks = async (member_id: string): Promise<Feedback[]> => {
   }
 };
 
-// Função para atualizar um comentário
-const updateFeedback = async (FeedbackID: string, newFeedback: string): Promise<void> => {
-  try {
-    const FeedbackRef = ref(database, `feedbacks/${FeedbackID}`);
-    await update(FeedbackRef, { Feedback: newFeedback });
-    console.log('Feedback updated successfully');
-  } catch (e) {
-    console.error("[Error] Feedback Update:", e);
-    throw new Error("[Error] Feedback Update");
-  }
-};
-
-// Função para deletar um comentário
-const deleteFeedback = async (FeedbackID: string): Promise<void> => {
-  try {
-    const FeedbackRef = ref(database, `feedbacks/${FeedbackID}`);
-    await remove(FeedbackRef);
-    console.log("Feedback deleted:", FeedbackID);
-  } catch (e) {
-    console.error("[Error] Feedback Delete:", e);
-    throw new Error("[Error] Feedback Delete");
-  }
-};
-
-export { createFeedback, readFeedbacks, updateFeedback, deleteFeedback };
+export { createFeedback, readFeedbacks };

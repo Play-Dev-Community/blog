@@ -8,78 +8,78 @@ import Header from "@components/Header.astro";
   <main id="main-content">
     <section id="hero">
       <div>
-        <h1>
-          Login efetuado com sucesso!
-        </h1>
+        <h1 class="auth-title">Quase lá!</h1>
 
-        <h2 class="redirect ellipsis">
-          Aguarde, estamos validando a sua sessão
+        <h2 class="auth-redirect ellipsis">
+          Estamos validando a sua sessão, aguarde
         </h2>
+      </div>
+    </section>
 
-      </div>    
-</Layout>
-
-<style>
-    @import 'animate.css';
-  /* ===== Hero Section ===== */
-  #hero {
-    @apply pb-6 pt-8 text-center;
-  }
-  #hero h1 {
-    @apply my-4 text-skin-accent inline-block text-3xl font-bold sm:mt-0 sm:mb-8 sm:text-5xl;
-  }
-
-  .ellipsis::after {
-    content: "";
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: bottom;
-    transform: translateX(-0.25em);
-    text-align: left;
-    animation: ellipsis steps(4, end) 1s infinite;
-  }
-
-  @keyframes ellipsis {
-    0% {
-      content: ".";
-    }
-    50% {
-      content: "..";
-    }
-    100% {
-      content: "...";
-    }
-  }
-
-  .redirect {
-    font-size: 24px;
-  }
-</style>
-
-<script>
-import confetti from 'canvas-confetti';
-import { isLoggedIn, startSession } from '../core/session';
-import { navigate } from 'astro:transitions/client';
-
-  isLoggedIn.subscribe( (logged: any) => {
-
-    if (!logged) {
-      window.onload = async () => {
-        const frag = new URLSearchParams(window.location.hash.slice(1));
-
-        const [accessToken, tokenType] = [frag.get('access_token'), frag.get('token_type')];
-
-        if (!accessToken || !tokenType) return;
-
-        await startSession(accessToken);
-
-        confetti();
-
-        setTimeout(() => {
-          navigate('/');
-        }, 2500);
+    <style>
+      @import "animate.css";
+      /* ===== Hero Section ===== */
+      #hero {
+        @apply pb-6 pt-8 text-center;
       }
-    }
-  })
+      #hero h1 {
+        @apply my-4 inline-block text-3xl font-bold text-skin-accent sm:mb-8 sm:mt-0 sm:text-5xl;
+      }
 
-</script>
+      .ellipsis::after {
+        content: "";
+        overflow: hidden;
+        display: inline-block;
+        vertical-align: bottom;
+        transform: translateX(-0.25em);
+        text-align: left;
+        width: 60px;
+        animation: ellipsis steps(4, end) 1s infinite;
+      }
+
+      @keyframes ellipsis {
+        0% {
+          content: ".";
+        }
+        50% {
+          content: "..";
+        }
+        100% {
+          content: "...";
+        }
+      }
+
+      .auth-title.success {
+        font-size: 4.5rem;
+        animation: rubberBand forwards;
+        animation-duration: 1s;
+      }
+
+      .auth-redirect {
+        font-size: 24px;
+        font-weight: bold;
+      }
+    </style>
+
+    <script>
+      import { isLoggedIn, startSession } from "../core/session";
+
+      isLoggedIn.subscribe((logged: any) => {
+        if (!logged) {
+          window.onload = async () => {
+            const frag = new URLSearchParams(window.location.hash.slice(1));
+
+            const [accessToken, tokenType] = [
+              frag.get("access_token"),
+              frag.get("token_type"),
+            ];
+
+            if (!accessToken || !tokenType) return;
+
+            await startSession(accessToken);
+          };
+        }
+      });
+    </script>
+  </main>
+</Layout>
