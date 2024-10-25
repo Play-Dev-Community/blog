@@ -3,16 +3,12 @@ import { EStorage } from "models/storage.model";
 export class Storage {
   constructor() { }
 
-  private setCookie(cname: string, cvalue: string, exdays: number, http: boolean) {
+  private setCookie(cname: string, cvalue: string, exdays: number) {
     const d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     let expires = "expires=" + d.toUTCString();
 
     let cookie = `${cname}=${cvalue};${expires};path/`;
-
-    if (http) {
-      cookie = `${cookie};SameSite=None;Secure;HttpOnly;`
-    }
 
     document.cookie = cookie;
   }
@@ -39,7 +35,7 @@ export class Storage {
   }
 
   setData(key: string, value: any) {
-    this.setCookie(key, JSON.stringify(value), 3, key === EStorage.TOKEN);
+    this.setCookie(key, JSON.stringify(value), 7);
   }
 
   getData(key: string) {

@@ -2,7 +2,7 @@ import { EStorage } from "models/storage.model";
 import { Storage } from './storage';
 import { atom } from "nanostores";
 import { navigate } from "astro:transitions/client";
-import { signInWithCustomToken } from "firebase/auth";
+import { signInWithCustomToken, signOut } from "firebase/auth";
 import { auth } from "./firebase";
 import confetti from "canvas-confetti";
 
@@ -15,11 +15,10 @@ let isLogged!: boolean;
 
 async function signInDiscord(accessToken: string) {
   try {
-    // 2. Fetch custom token with Discord access token
+
     const authDiscord = await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/discord`, {
-      method: 'POST',
+      credentials: 'include',
       headers: {
-        'Content-Type': 'application/json',
         authorization: `${accessToken}`
       }
     });
@@ -28,12 +27,24 @@ async function signInDiscord(accessToken: string) {
       throw new Error(`Backend request failed with status: ${authDiscord.status}`);
     }
 
-    const authDiscordData = await authDiscord.json(); // Parse JSON response
+    const authDiscordData = await authDiscord.json();
+
     const customToken = authDiscordData.token;
 
-    await signInWithCustomToken(auth, customToken).then(async (userCredential) => {
+    signInWithCustomToken(auth, customToken).then(async (userCredential) => {
 
-      storage!.setData(EStorage.TOKEN, await userCredential.user.getIdToken());
+      const impersonateToken = await userCredential.user.getIdToken();
+
+      console.log('AccessToken', accessToken);
+      console.log('CustomToken', customToken);
+      console.log('impersonateToken', impersonateToken);
+
+      await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/discord/session`, {
+        headers: {
+          authorization: `Bearer ${impersonateToken}`
+        }
+      });
+
       storage!.setData(EStorage.MEMBER, authDiscordData.data);
       storage!.setData(EStorage.ROLES, authDiscordData.roles);
 
@@ -77,18 +88,24 @@ async function signInDiscord(accessToken: string) {
   }
 }
 
-export function logOut() {
-  isLogged = false;
-  isLoggedIn.set(false);
+export async function logOut() {
 
-  storage!.clearData();
+  await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/signout`);
 
-  navigate('/');
+  signOut(auth).then(() => {
+    isLogged = false;
+    isLoggedIn.set(false);
 
-  setTimeout(() => {
-    storage = null;
-    window.location.reload();
-  })
+    storage!.clearData();
+
+    navigate('/');
+
+    setTimeout(() => {
+      storage = null;
+      window.location.reload();
+    })
+  });
+
 }
 
 export async function startSession(accessToken: string) {

@@ -7,10 +7,7 @@ const getDevCoins = async (id: string) => {
   let res: Response = await fetch(
     `${import.meta.env.PUBLIC_PLAYDEV_API}/devcoins/${id}`,
     {
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      credentials: 'include'
     }
   );
 
