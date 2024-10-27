@@ -40,7 +40,7 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
         setMemberID(storedUser.id);
         setAvatar(avatar);
 
-        new Storage().setData(EStorage.AVATAR, avatar);
+        Storage.setData(EStorage.AVATAR, avatar, 7 * 24 * 60 * 60 * 1000);
       }
     } else {
       if (storedUser) {
@@ -53,7 +53,7 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
   }, []);
 
   const toggleUserOptions = () => {
-    setOptionsVisible(!optionsVisible );
+    setOptionsVisible(!optionsVisible);
   };
 
   const convertURL = () => {
@@ -66,10 +66,10 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
     console.log('URL', convertURL());
 
     const
-    clientID = '1278932305406197842',
-    type = 'token',
-    URI = convertURL(),
-    scope = 'identify+guilds.members.read+guilds';
+      clientID = '1278932305406197842',
+      type = 'token',
+      URI = convertURL(),
+      scope = 'identify+guilds.members.read+guilds';
 
     window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientID}&response_type=${type}&redirect_uri=${URI}&scope=${scope}`;
   }
@@ -77,17 +77,17 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
   if (!readyToRender) return null;
 
   if (readyToRender && !name && !avatar) {
-      return (
-          <button onClick={authDiscord} className='btn-login'>
-            <img
-              src={discordIcon.src}
-              alt='Ícone da logo do Discord'
-              width='25'
-              height='25'
-            />
-            Login
-          </button>
-      );
+    return (
+      <button onClick={authDiscord} className='btn-login'>
+        <img
+          src={discordIcon.src}
+          alt='Ícone da logo do Discord'
+          width='25'
+          height='25'
+        />
+        Login
+      </button>
+    );
   }
 
   return (
@@ -97,7 +97,7 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
         <img className='image' src={avatar!} alt={name!} />
       </div>
 
-      { optionsVisible && <UserOptions data={ { id: memberID, isStudent, username: name } } /> }
+      {optionsVisible && <UserOptions data={{ id: memberID, isStudent, username: name }} />}
 
     </div>
   );

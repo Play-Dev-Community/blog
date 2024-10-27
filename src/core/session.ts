@@ -10,14 +10,12 @@ import { delay, from } from 'rxjs';
 
 export const isLoggedIn = atom(false);
 
-let storage: Storage | null = new Storage();
 let isLogged!: boolean;
 
 async function signInDiscord(accessToken: string) {
   try {
 
     const authDiscord = await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/discord`, {
-      credentials: 'include',
       headers: {
         authorization: `${accessToken}`
       }
@@ -35,18 +33,17 @@ async function signInDiscord(accessToken: string) {
 
       const impersonateToken = await userCredential.user.getIdToken();
 
-      console.log('AccessToken', accessToken);
-      console.log('CustomToken', customToken);
-      console.log('impersonateToken', impersonateToken);
-
-      await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/discord/session`, {
+      let session: any = await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/session`, {
         headers: {
           authorization: `Bearer ${impersonateToken}`
         }
       });
 
-      storage!.setData(EStorage.MEMBER, authDiscordData.data);
-      storage!.setData(EStorage.ROLES, authDiscordData.roles);
+      session = await session.json();
+
+      Storage.setData(EStorage.TOKEN, session.token, session.expiresIn);
+      Storage.setData(EStorage.MEMBER, authDiscordData.data, session.expiresIn);
+      Storage.setData(EStorage.ROLES, authDiscordData.roles, session.expiresIn);
 
       isLogged = true;
       isLoggedIn.set(true);
@@ -74,9 +71,6 @@ async function signInDiscord(accessToken: string) {
           colors: colors
         })
       ])
-        .pipe(
-          delay(2000)
-        )
         .subscribe(r => {
           navigate('/');
         });
@@ -96,12 +90,11 @@ export async function logOut() {
     isLogged = false;
     isLoggedIn.set(false);
 
-    storage!.clearData();
+    Storage.clearData();
 
     navigate('/');
 
     setTimeout(() => {
-      storage = null;
       window.location.reload();
     })
   });

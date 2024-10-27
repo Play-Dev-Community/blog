@@ -3,9 +3,9 @@ import { EStorage } from "models/storage.model";
 export class Storage {
   constructor() { }
 
-  private setCookie(cname: string, cvalue: string, exdays: number) {
-    const d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  private static setCookie(cname: string, cvalue: string, time: number) {
+    const d = new Date(new Date().setMilliseconds(time));
+
     let expires = "expires=" + d.toUTCString();
 
     let cookie = `${cname}=${cvalue};${expires};path/`;
@@ -13,7 +13,7 @@ export class Storage {
     document.cookie = cookie;
   }
 
-  private getCookie(cname: string) {
+  private static getCookie(cname: string) {
     let name = cname + "=";
     let ca = document.cookie.split(';');
     for (let i = 0; i < ca.length; i++) {
@@ -28,21 +28,21 @@ export class Storage {
     return "";
   }
 
-  private deleteCookie(cname: string) {
+  private static deleteCookie(cname: string) {
     if (this.getCookie(cname)) {
       document.cookie = `${cname}=;expires=Thu, 01 Jan 1970 00:00:01 GMT`
     }
   }
 
-  setData(key: string, value: any) {
-    this.setCookie(key, JSON.stringify(value), 7);
+  static setData(key: string, value: any, time: number) {
+    this.setCookie(key, JSON.stringify(value), time);
   }
 
-  getData(key: string) {
+  static getData(key: string) {
     return JSON.parse(this.getCookie(key));
   }
 
-  clearData() {
+  static clearData() {
     const keys = Object.values(EStorage);
 
     for (let key of keys) {

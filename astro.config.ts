@@ -13,7 +13,6 @@ import vercel from "@astrojs/vercel/serverless";
 export default defineConfig({
   output: 'hybrid',
   adapter: vercel({
-    isr: true,
     webAnalytics: { enabled: true }
   }),
   site: SITE.website,
