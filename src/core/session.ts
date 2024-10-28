@@ -71,6 +71,9 @@ async function signInDiscord(accessToken: string) {
           colors: colors
         })
       ])
+        .pipe(
+          delay(1200)
+        )
         .subscribe(r => {
           navigate('/');
         });
