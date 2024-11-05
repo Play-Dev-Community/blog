@@ -1,11 +1,13 @@
 ---
+
 ---
+
 <style>
-  @import 'animate.css';
+  @import "animate.css";
 
   .banner-cookies {
-    @apply opacity-0 bg-skin-tooltip rounded-sm px-4 py-2 w-6/12 text-center;
-    @apply flex justify-center items-center h-[40%] sm:h-[30%];
+    @apply w-6/12 rounded-sm bg-skin-tooltip px-4 py-2 text-center opacity-0;
+    @apply flex h-[40%] items-center justify-center sm:h-[30%];
     @apply flex-col;
     width: 100%;
     position: fixed;
@@ -17,7 +19,6 @@
   }
 
   .cookies.visible .banner-cookies {
-
     align-items: center;
     bottom: 0;
     z-index: 50;
@@ -26,7 +27,7 @@
   }
 
   .banner-cookies .content {
-    @apply opacity-0 p-6 max-w-7xl flex flex-col gap-4;
+    @apply flex max-w-7xl flex-col gap-4 p-6 opacity-0;
     transform: translateY(25%);
     transition: 0.3s all ease-in-out;
     transition-delay: 500ms;
@@ -38,7 +39,7 @@
   }
 
   .banner-cookies .content .title {
-    @apply text-2xl sm:text-4xl font-bold;
+    @apply text-2xl font-bold sm:text-4xl;
   }
 
   .banner-cookies .content .text {
@@ -46,19 +47,19 @@
   }
 
   .banner-cookies .actions {
-    @apply flex flex-col justify-end items-end;
+    @apply flex flex-col items-end justify-end;
   }
 
   .banner-cookies .actions button[confirm-cookies] {
     /* background-color: #27ae60; */
-    @apply px-5 bg-skin-accent rounded-sm min-w-[120px];
+    @apply min-w-[120px] rounded-sm bg-skin-accent px-5;
     transition: 0.3s ease;
     @apply hover:bg-skin-accent-dark;
   }
 
   .banner-cookies .actions button[disapprove-cookies] {
     background-color: #c0392b;
-    @apply px-2 rounded-sm;
+    @apply rounded-sm px-2;
   }
 
   .banner-cookies .actions button[confirm-cookies] {
@@ -72,20 +73,18 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.75);
+    background-color: rgba(0, 0, 0, 0.75);
     z-index: 50;
     backdrop-filter: blur(0);
     transition: 0.3s all;
   }
-  
+
   .cookies.visible .cookies-mask {
     backdrop-filter: blur(8px);
   }
-
 </style>
 
 <div class="cookies">
-
   <div class="cookies-mask"></div>
 
   <div class="banner-cookies">
@@ -93,7 +92,8 @@
       <h4 class="title">Uso de Cookies</h4>
 
       <p class="text">
-        Este site utiliza cookies para melhorar a sua experiência de navegação. <br />
+        Este site utiliza cookies para melhorar a sua experiência de navegação. <br
+        />
         Ao utilizar nossos serviços, você concorda com tal monitamento.
       </p>
 
@@ -104,35 +104,34 @@
   </div>
 </div>
 
-
 <script>
-  document.addEventListener('astro:page-load', () => {
-  if (window.localStorage.getItem('cookies')) {
-    removeCookies();
-  }
-
-  setTimeout(() => {
-    if (!window.localStorage.getItem('cookies')) {
-      document.querySelector('.cookies')?.classList.add('visible');
-
-      document.body.style.overflowY = 'hidden';
+  document.addEventListener("astro:page-load", () => {
+    if (window.localStorage.getItem("cookies")) {
+      removeCookies();
     }
-  }, 500);
-
-  function removeCookies() {
-    document.querySelector('.cookies')?.remove();
-  }
-
-  function confirmCookies() {
-    window.localStorage.setItem('cookies', 'Y');
-    document.querySelector('.cookies')?.classList.remove('visible');
-
-    document.body.style.overflowY = 'auto';
 
     setTimeout(() => {
-      removeCookies();
-    }, 300);
-  }
-  document.querySelector('button[confirm-cookies]')?.addEventListener('click', confirmCookies);
-})
+      if (!window.localStorage.getItem("cookies")) {
+        document.querySelector(".cookies")?.classList.add("visible");
+      }
+    }, 500);
+
+    function removeCookies() {
+      document.querySelector(".cookies")?.remove();
+    }
+
+    function confirmCookies() {
+      window.localStorage.setItem("cookies", "Y");
+      document.querySelector(".cookies")?.classList.remove("visible");
+
+      document.body.style.overflowY = "auto";
+
+      setTimeout(() => {
+        removeCookies();
+      }, 300);
+    }
+    document
+      .querySelector("button[confirm-cookies]")
+      ?.addEventListener("click", confirmCookies);
+  });
 </script>

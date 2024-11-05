@@ -5,18 +5,18 @@ import { equalTo, get, orderByChild, push, query, ref, set } from "firebase/data
 
 // Interface Feedback
 export interface ReactionFeedbackDTO {
-  member_id: string;
+  user_id: string;
   feedback_id: string;
   reaction: keyof typeof ReactionsFeedback;
 }
 
 // Função para criar um novo comentário
-const createFeedbackReaction = async (data: Omit<ReactionFeedbackDTO, 'member_id'>): Promise<void> => {
-  const member_id = getUserData().id;
+const createFeedbackReaction = async (data: Omit<ReactionFeedbackDTO, 'user_id'>): Promise<void> => {
+  const user_id = getUserData().id;
 
   const newData: ReactionFeedbackDTO = {
     ...data,
-    member_id
+    user_id
   }
 
   try {
@@ -45,7 +45,7 @@ const readReactionFeedbacks = async (feedback_id: string): Promise<{
 
     postSnapshot.forEach(childSnapshot => {
       const r = childSnapshot.val() as ReactionFeedbackDTO;
-      
+
       if (!reactions[r.reaction]) {
         reactions[r.reaction] = [];
       }

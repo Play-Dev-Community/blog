@@ -1,23 +1,33 @@
-import { database } from "@core/firebase";
-import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from "firebase/database";
+import { Storage } from '@core/storage';
+import { EStorage } from 'models/storage.model';
 
 // Interface Feedback
-interface Feedback {
+export interface Feedback {
   id?: string;
-  member_id: string;
+  user_id: string;
   author: string;
   title: string;
   text: string;
   datetime: number;
   support_link?: string;
+  reactions?: string[];
 }
 
 // Função para criar um novo comentário
 const createFeedback = async (data: Feedback): Promise<void> => {
   try {
-    const newFeedbackRef = push(ref(database, "feedbacks"));
-    await set(newFeedbackRef, data);
-    console.log("New feedback created:", newFeedbackRef.key);
+    let res: Response = await fetch(
+      `${import.meta.env.PUBLIC_PLAYDEV_API}/feedbacks`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${Storage.getData(EStorage.TOKEN)}`
+      },
+      body: data as any
+    });
+
+    const response = await res.json();
+
+    return response;
   } catch (e) {
     console.error("[Error] Feedback Create:", e);
     throw new Error("[Error] Feedback Create");
@@ -27,21 +37,17 @@ const createFeedback = async (data: Feedback): Promise<void> => {
 // Função para ler todos os comentários de um determinado post
 const readFeedbacks = async (member_id: string): Promise<Feedback[]> => {
   try {
-    const FeedbackRef = ref(database, `feedbacks`);
-    const postQuery = query(FeedbackRef, orderByChild('member_id'), equalTo(member_id));
-    const postSnapshot = await get(postQuery);
+    let res: Response = await fetch(
+      `${import.meta.env.PUBLIC_PLAYDEV_API}/feedbacks/${member_id}`, {
+      headers: {
+        authorization: `Bearer ${Storage.getData(EStorage.TOKEN)}`
+      }
+    }
+    );
 
-    const feedbacks: Feedback[] = [];
+    const response = await res.json();
 
-    postSnapshot.forEach(childSnapshot => {
-      const feedback = childSnapshot.val() as Feedback;
-      feedback.id = childSnapshot.key;
-      feedbacks.push(feedback);
-    });
-
-    feedbacks.sort((a, b) => b.datetime - a.datetime);
-
-    return feedbacks;
+    return response;
   } catch (e) {
     console.error("[Error] Feedback Read:", e);
     throw new Error("[Error] Feedback Read");

@@ -5,7 +5,7 @@ export const SITE: Site = {
   author: "Gabriel Moodlight",
   desc: "Hub de estudos para programação",
   title: "Play Dev",
-  ogImage: "astropaper-og.jpg",
+  ogImage: "bg-discord.jpg",
   postPerPage: 5,
   scheduledPostMargin: 15 * 60 * 1000, // Minutes
   layoutConfig: {

@@ -4,18 +4,8 @@ import type { DiscordUserData } from '@api/discord';
 import { getUserData } from '@utils/user.utils';
 
 import './Feedbacks.scss';
-import { readFeedbacks } from '@api/feedbacks';
+import { readFeedbacks, type Feedback } from '@api/feedbacks';
 import PaginatedFeedbacks from './PaginatedFeedback';
-
-export interface Feedback {
-  id?: string;
-  member_id: string;
-  author: string;
-  title: string;
-  text: string;
-  datetime: number;
-  support_link?: string;
-}
 
 const Feedbacks: React.FC = () => {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
@@ -38,8 +28,6 @@ const Feedbacks: React.FC = () => {
 
   const fetchFeedbacks = () => {
     readFeedbacks(memberID!).then(res => {
-      console.log('saDadsd', res);
-
       setFeedbacks(res);
       setReadyToRender(true);
     }).catch(e => {
@@ -50,12 +38,12 @@ const Feedbacks: React.FC = () => {
   return (
     <div className='feedbacks-container'>
       <div className='feedbacks'>
-        { readyToRender ?
+        {readyToRender ?
           feedbacks.length ?
             <PaginatedFeedbacks feedbacks={feedbacks} />
-          : (
-            'Você ainda não recebeu nenhum feedback.'
-          ) : (
+            : (
+              'Você ainda não recebeu nenhum feedback.'
+            ) : (
             <>
               <div className='skeleton-wrapper'>
                 <div className="feedback-skeleton"></div>

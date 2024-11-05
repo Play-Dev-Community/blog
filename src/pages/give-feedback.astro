@@ -70,16 +70,7 @@
 </script>
 
 <script>
-  import { createFeedback } from "@api/feedbacks";
-
-  interface Feedback {
-    member_id: string;
-    author: string;
-    title: string;
-    text: string;
-    datetime: number;
-    support_link?: string;
-  }
+  import { createFeedback, type Feedback } from "@api/feedbacks";
 
   // Função para manipular o envio do formulário
   async function handleSubmit(event: Event) {
@@ -87,7 +78,7 @@
 
     const formData = new FormData(event.target as HTMLFormElement);
     const feedback: Feedback = {
-      member_id: formData.get("member_id") as string,
+      user_id: formData.get("member_id") as string,
       author: formData.get("author") as string,
       title: formData.get("title") as string,
       text: formData.get("text") as string,

@@ -34,7 +34,7 @@ const socialImageURL = new URL(
 ).href;
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html
   lang=`${LOCALE.lang ?? "en"}`
   class={`${scrollSmooth && "scroll-smooth"}`}
@@ -95,7 +95,11 @@ const socialImageURL = new URL(
     />
 
     <!-- DevIcon -->
-    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
+    />
 
     <!-- Config PWA
     <link rel="manifest" href={`${SITE.website}./manifest.json`} /> -->
@@ -118,20 +122,15 @@ const socialImageURL = new URL(
     }
 
     <ViewTransitions />
-
   </head>
   <body>
-
     <SpeedInsights />
 
     <slot />
 
     <script is:inline src="/toggle-theme.js"></script>
     <script is:inline src="/service-worker/main.js"></script>
-  </body>
-</html>
-
-<!-- <script>
+  </body><!-- <script>
 import confetti from "canvas-confetti";
 
 const randomInRange = (min:number, max:number) => {
@@ -210,3 +209,4 @@ const randomInRange = (min:number, max:number) => {
     // window.addEventListener('click', onClickOutside);
   // });
 </script> -->
+</html>
