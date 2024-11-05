@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import type { Feedback } from './Feedbacks';
 
 import './Feedbacks.scss';
 import FeedbackReactionBar from '@components/FeedbackReactionBar/FeedbackReactionBar';
+import type { Feedback } from '@api/feedbacks';
 
 const PaginatedFeedbacks = ({ feedbacks }: { feedbacks: Feedback[] }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +37,7 @@ const PaginatedFeedbacks = ({ feedbacks }: { feedbacks: Feedback[] }) => {
   return (
     <div className='flex flex-col justify-between h-full'>
       {currentFeedbacks.map(feedback => (
-        <div className='mb-10 sm:mb-5' key={`${feedback.member_id}_${feedback.datetime}`}>
+        <div className='mb-10 sm:mb-5' key={`${feedback.user_id}_${feedback.datetime}`}>
           <h2 className='text-lg font-bold'>{feedback.title}</h2>
           <p>{feedback.text}</p>
           <small className='opacity-50'>
