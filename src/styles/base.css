@@ -68,8 +68,11 @@
   html[data-theme="dark"] #sun-svg {
     display: block;
   }
+  html {
+    height: 100%;
+  }
   body {
-    @apply flex h-[100svh] flex-col bg-skin-fill text-base font-sans text-skin-base 
+    @apply flex h-[100%] flex-col bg-skin-fill text-base font-sans text-skin-base 
     selection:bg-skin-accent selection:bg-opacity-70 selection:text-skin-inverted ;
   }
   section {

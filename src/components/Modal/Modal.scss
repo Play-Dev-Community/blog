@@ -1,0 +1,49 @@
+.modal-container {
+  @apply flex items-center justify-center fixed inset-0 z-50;
+}
+
+.modal-overlay {
+  @apply fixed inset-0 bg-[#0a0a0aaa] bg-opacity-5;
+  animation: fadeIn 300ms ease-out;
+}
+
+.modal-content {
+  @apply bg-[#000000aa] p-6 rounded-lg shadow-lg max-w-lg w-full relative;
+  animation: scaleIn 300ms ease-out;
+}
+
+.close-button {
+  @apply absolute top-2 right-4 text-gray-600 hover:text-gray-900 text-3xl;
+}
+
+.modal-title {
+  @apply text-2xl font-bold mb-2;
+}
+
+.modal-description {
+  @apply text-sm text-skin-base opacity-60 hidden sm:block;
+}
+
+.modal-body {
+  @apply mt-4;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}

@@ -5,6 +5,8 @@ import LinkButton from "./LinkButton.astro";
 import UserArea from "./UserArea/UserArea";
 import { Icon } from "astro-icon/components";
 
+import { IconSun, IconMoon, IconBell } from "@tabler/icons-react";
+
 export interface Props {
   activeNav?:
     | "posts"
@@ -13,7 +15,8 @@ export interface Props {
     | "search"
     | "chat"
     | "instructors"
-    | "courses";
+    | "courses"
+    | "challenges";
   isAuth?: boolean;
 }
 
@@ -24,18 +27,32 @@ const { activeNav, isAuth } = Astro.props;
   @import "animate.css";
 
   .nav-container {
-    @apply mx-auto flex max-w-7xl flex-col items-center justify-between sm:flex-row;
+    @apply mx-auto flex w-auto max-w-7xl flex-col items-center justify-between sm:flex-row;
+    transition: 0.3s all;
+    &.smooth-scroll {
+      @apply max-w-full px-5;
+
+      .logo-letter {
+        @apply scale-50 opacity-0;
+      }
+
+      .logo-svg {
+        width: 40px;
+        height: 40px;
+      }
+    }
   }
 
   .top-nav-wrap {
-    @apply relative flex w-full items-start justify-between py-2 transition-all ease-in sm:items-center sm:py-4;
+    @apply relative flex w-full items-start justify-between py-2 transition-all ease-in sm:items-center;
   }
 
   .logo {
     @apply absolute text-xl font-semibold sm:static sm:py-1 sm:text-2xl;
     letter-spacing: -2px;
   }
-  .logo img {
+
+  .logo-svg {
     @apply ml-1 max-w-10 p-0 transition-all ease-in sm:max-w-16;
   }
 
@@ -158,8 +175,8 @@ const { activeNav, isAuth } = Astro.props;
 
 <!-- <iframe src="https://e.widgetbot.io/channels/1200296192890916865/1212450831178408036" allow="clipboard-write; fullscreen" height="600" width="800"></iframe> -->
 <header class="sticky top-0 z-50 w-full bg-skin-fill">
-  <div class="nav-container">
-    <div class="top-nav-wrap" smooth-scroll>
+  <div class="nav-container" smooth-scroll>
+    <div class="top-nav-wrap">
       <a href="/" class="logo whitespace-nowrap">
         {
           LOGO_IMAGE.enable ? (
@@ -181,6 +198,7 @@ const { activeNav, isAuth } = Astro.props;
               <span class="logo-letter">D</span>
               <span class="logo-letter">e</span>
               <span class="logo-letter">v</span>
+              <span class="logo-letter">s</span>
             </div>
           ) : (
             SITE.title
@@ -214,6 +232,20 @@ const { activeNav, isAuth } = Astro.props;
           </svg>
         </button>
         <ul id="menu-items">
+          <!-- <li>
+            <a href="/cursos/" class={activeNav === "courses" ? "active" : ""}>
+              Cursos
+            </a>
+          </li> -->
+
+          <li>
+            <a
+              class={`${activeNav === "challenges" ? "active" : ""} opacity-[0.33] pointer-events-none`}
+              aria-disabled="true"
+            >
+              🔒 Desafios
+            </a>
+          </li>
           <li>
             <a href="/posts/" class={activeNav === "posts" ? "active" : ""}>
               Postagens
@@ -226,17 +258,6 @@ const { activeNav, isAuth } = Astro.props;
             </a>
           </li>
 
-          <!-- <li>
-            <a href="/cursos/" class={activeNav === "courses" ? "active" : ""}>
-              Cursos
-            </a>
-          </li> -->
-
-          <li>
-            <a href="/sobre/" class={activeNav === "about" ? "active" : ""}>
-              Sobre
-            </a>
-          </li>
           <!-- <li>
             <a href="/instructors/" class={activeNav === "instructors" ? "active" : ""}>
               Instrutores
@@ -278,6 +299,10 @@ const { activeNav, isAuth } = Astro.props;
               }
             </li>
 
+            <!-- <li>
+              <IconBell className="fill-none" />
+            </li> -->
+
             <li class="order-4">
               <button
                 id="theme-btn"
@@ -286,19 +311,16 @@ const { activeNav, isAuth } = Astro.props;
                 aria-label="auto"
                 aria-live="polite"
               >
-                <svg xmlns="http://www.w3.org/2000/svg" id="moon-svg">
-                  <path
-                    d="M20.742 13.045a8.088 8.088 0 0 1-2.077.271c-2.135 0-4.14-.83-5.646-2.336a8.025 8.025 0 0 1-2.064-7.723A1 1 0 0 0 9.73 2.034a10.014 10.014 0 0 0-4.489 2.582c-3.898 3.898-3.898 10.243 0 14.143a9.937 9.937 0 0 0 7.072 2.93 9.93 9.93 0 0 0 7.07-2.929 10.007 10.007 0 0 0 2.583-4.491 1.001 1.001 0 0 0-1.224-1.224zm-2.772 4.301a7.947 7.947 0 0 1-5.656 2.343 7.953 7.953 0 0 1-5.658-2.344c-3.118-3.119-3.118-8.195 0-11.314a7.923 7.923 0 0 1 2.06-1.483 10.027 10.027 0 0 0 2.89 7.848 9.972 9.972 0 0 0 7.848 2.891 8.036 8.036 0 0 1-1.484 2.059z"
-                  ></path>
-                </svg>
+                <span id="moon-svg">
+                  <IconMoon className="fill-none" />
+                </span>
 
-                <svg xmlns="http://www.w3.org/2000/svg" id="sun-svg">
-                  <path
-                    d="M6.993 12c0 2.761 2.246 5.007 5.007 5.007s5.007-2.246 5.007-5.007S14.761 6.993 12 6.993 6.993 9.239 6.993 12zM12 8.993c1.658 0 3.007 1.349 3.007 3.007S13.658 15.007 12 15.007 8.993 13.658 8.993 12 10.342 8.993 12 8.993zM10.998 19h2v3h-2zm0-17h2v3h-2zm-9 9h3v2h-3zm17 0h3v2h-3zM4.219 18.363l2.12-2.122 1.415 1.414-2.12 2.122zM16.24 6.344l2.122-2.122 1.414 1.414-2.122 2.122zM6.342 7.759 4.22 5.637l1.415-1.414 2.12 2.122zm13.434 10.605-1.414 1.414-2.122-2.122 1.414-1.414z"
-                  ></path>
-                </svg>
+                <span id="sun-svg">
+                  <IconSun className="fill-none" />
+                </span>
               </button>
             </li>
+
           </div>
 
           <!-- <li class="relative">
@@ -314,31 +336,12 @@ const { activeNav, isAuth } = Astro.props;
 </header>
 
 <script>
-  let currentHeight: number;
-
   function toggleMenuHamburguer() {
     document.getElementById("menu-items")?.classList.toggle("visible");
     document.querySelector(".hamburger-menu")?.classList.toggle("opened");
   }
 
-  function smoothHeightScroll() {
-    const smoothClass = "smooth-scroll";
-
-    if (!currentHeight) currentHeight = 0;
-
-    document.querySelectorAll("*[smooth-scroll]").forEach(el => {
-      if (!window.scrollY && el.classList.contains(smoothClass)) {
-        el.classList.remove(smoothClass);
-      }
-
-      if (window.scrollY && !el.classList.contains(smoothClass)) {
-        el.classList.add(smoothClass);
-      }
-    });
-  }
-
   document.addEventListener("astro:page-load", () => {
-    document.addEventListener("scroll", smoothHeightScroll);
     document
       .querySelector("button.hamburger-menu")
       ?.addEventListener("click", toggleMenuHamburguer);

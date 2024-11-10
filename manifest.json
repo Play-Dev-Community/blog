@@ -19,8 +19,8 @@
   "display": "standalone",
   "dir": "auto",
   "lang": "pt-BR",
-  "name": "Play Dev: Blog",
-  "short_name": "PlayDev",
+  "name": "Play Devs",
+  "short_name": "PlayDevs",
   "start_url": "/",
   "scope": "/"
 }

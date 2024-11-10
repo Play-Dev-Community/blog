@@ -15,14 +15,17 @@ export interface Feedback {
 
 // Função para criar um novo comentário
 const createFeedback = async (data: Feedback): Promise<void> => {
+
+
   try {
     let res: Response = await fetch(
       `${import.meta.env.PUBLIC_PLAYDEV_API}/feedbacks`, {
       method: 'POST',
       headers: {
+        'Content-Type': 'application/json',
         authorization: `Bearer ${Storage.getData(EStorage.TOKEN)}`
       },
-      body: data as any
+      body: JSON.stringify(data)
     });
 
     const response = await res.json();

@@ -1,4 +1,5 @@
 ---
+import FooterNav from "./FooterNav/FooterNav";
 import Hr from "./Hr.astro";
 import Socials from "./Socials.astro";
 
@@ -12,7 +13,7 @@ const { noMarginTop = false } = Astro.props;
 ---
 
 <style>
-  @import 'animate.css';
+  @import "animate.css";
 
   .icon-heart {
     @apply mx-1 w-[20px];
@@ -40,28 +41,29 @@ const { noMarginTop = false } = Astro.props;
   <div class="footer-wrapper">
     <Socials centered />
     <div class="copyright-wrapper">
-      <span class="leading-3">{currentYear} &#169; Play Dev</span>
+      <span class="mx-auto leading-3">{currentYear} &#169; Play Devs</span>
       <!-- <span class="separator">&nbsp;|&nbsp;</span> -->
       <!-- <span>Todos os direitos reservados.</span> -->
       <!-- <div style="width: 100%;">Desenvolvido com <Icon name="heart" class="icon-heart" /> por Gabriel Moodlight</div> -->
 
       <a
-      href="/rss.xml"
-      class="rss-link"
-      aria-label="rss feed"
-      title="RSS Feed">
-
-      <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
-        ><path
-          d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
-        ></path><path
-          d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
-        ></path><circle cx="6" cy="18" r="2"></circle>
-      </svg>
-      <span class="sr-only">RSS Feed</span>
+        href="/rss.xml"
+        class="rss-link"
+        aria-label="rss feed"
+        title="RSS Feed"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
+          ><path
+            d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"
+          ></path><path
+            d="M12 20.001h2C14 14.486 9.514 10 4 10v2c4.411 0 8 3.589 8 8.001z"
+          ></path><circle cx="6" cy="18" r="2"></circle>
+        </svg>
+        <span class="sr-only">RSS Feed</span>
       </a>
-    </div>
 
+      <FooterNav client:load />
+    </div>
   </div>
 </footer>
 
@@ -79,7 +81,7 @@ const { noMarginTop = false } = Astro.props;
     @apply scale-125;
   }
   .copyright-wrapper {
-    @apply my-2 flex flex-col flex-wrap items-end gap-1 whitespace-nowrap sm:flex-row;
+    @apply my-2 flex flex-col-reverse flex-wrap items-end gap-4 whitespace-nowrap sm:flex-row sm:gap-2;
   }
   .separator {
     @apply hidden sm:inline;

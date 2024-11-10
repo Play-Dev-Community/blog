@@ -9,7 +9,8 @@ import Feature from "@components/Feature";
 import Post from "@components/Post";
 import getSortedPosts from "@utils/getSortedPosts";
 import BannerCookies from "@components/BannerCookies.astro";
-import WelcomeUser from '@components/WelcomeUser/WelcomeUser';
+import WelcomeUser from "@components/WelcomeUser/WelcomeUser";
+import { IconArrowRight } from "@tabler/icons-react";
 
 const posts = await getCollection("blog");
 
@@ -19,7 +20,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 ---
 
 <Layout>
-  <Header/>
+  <Header />
   <main id="main-content">
     <!-- <section id="hero">
       <div>
@@ -61,13 +62,10 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       featuredPosts.length > 0 && (
         <>
           <section id="featured">
-            <h2>Apresentação</h2>
+            <h2>Destaques</h2>
             <ul class="flex flex-col justify-between sm:flex-row">
               {featuredPosts.map(({ data, slug }) => (
-                <Feature
-                  href={`/posts/${slug}/`}
-                  frontmatter={data}
-                />
+                <Feature href={`/posts/${slug}/`} frontmatter={data} />
               ))}
             </ul>
           </section>
@@ -84,10 +82,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
             {recentPosts.map(
               ({ data, slug }, index) =>
                 index < 7 && (
-                  <Post
-                    href={`/posts/${slug}/`}
-                    frontmatter={data}
-                  />
+                  <Post href={`/posts/${slug}/`} frontmatter={data} />
                 )
             )}
           </ul>
@@ -96,17 +91,14 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     }
 
     {
-      sortedPosts.length > 8 &&
-      <div class="all-posts-btn-wrapper">
-        <LinkButton href="/posts/">
-          Todas as Postagens
-          <svg xmlns="http://www.w3.org/2000/svg"
-            ><path
-              d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z"
-            ></path>
-          </svg>
-        </LinkButton>
-      </div>
+      sortedPosts.length > 8 && (
+        <div class="all-posts-btn-wrapper">
+          <LinkButton href="/posts/">
+            Todas as Postagens
+            <IconArrowRight />
+          </LinkButton>
+        </div>
+      )
     }
   </main>
 
@@ -116,13 +108,13 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 </Layout>
 
 <style>
-    @import 'animate.css';
+  @import "animate.css";
   /* ===== Hero Section ===== */
   #hero {
     @apply pb-6 pt-8 text-center;
   }
   #hero h1 {
-    @apply my-4 text-skin-accent inline-block text-3xl font-bold sm:mt-0 sm:text-5xl;
+    @apply my-4 inline-block text-3xl font-bold text-skin-accent sm:mt-0 sm:text-5xl;
   }
   #hero p {
     @apply my-2;
@@ -144,7 +136,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   }
 
   #featured h2 {
-    @apply text-2xl sm:text-4xl font-semibold tracking-wide;
+    @apply text-2xl font-semibold tracking-wide sm:text-4xl;
   }
 
   #recent-posts h2 {
@@ -153,11 +145,6 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 
   .all-posts-btn-wrapper {
     @apply my-8 text-center;
-  }
-
-  .all-posts-btn-wrapper svg {
-    animation: wobble infinite;
-    animation-duration: 2s;
   }
 </style>
 

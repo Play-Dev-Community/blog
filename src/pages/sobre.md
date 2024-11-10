@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/AboutLayout.astro
-title: "Sobre a Play Dev"
+title: "Sobre a Play Devs"
 ---
 
 <style>
@@ -51,7 +51,9 @@ title: "Sobre a Play Dev"
 }
 </style>
 
-A Play Dev é uma comunidade vibrante e acolhedora criada para reunir **desenvolvedores**, **designers**, **gamers**, **traders** e **entusiastas da tecnologia através da programação**. Nossa missão é proporcionar um ambiente colaborativo onde você pode aprender, compartilhar conhecimentos e se conectar com outros profissionais apaixonados pelo mundo digital.
+A Play Devs é uma plataforma de estudos online para programadores e entusiastas da programação. 
+
+Em 2024, nasceu como uma comunidade vibrante e acolhedora criada para reunir **desenvolvedores**, **designers**, **gamers**, **traders** e **entusiastas da tecnologia através da programação**. Nossa missão é proporcionar um ambiente colaborativo onde você pode aprender, compartilhar conhecimentos e se conectar com outros profissionais apaixonados pelo mundo digital, originalmente chamada de "Play Dev".
 
 <div>
   <img src="/assets/dev.svg" class="dev-img sm:w-1/2 relative z-20 mx-auto animate-pulse" alt="coding dev illustration">

@@ -1,20 +1,38 @@
-// import { useEffect } from "react";
+// Modal.tsx
+import React from "react";
 
-// import './Modal.scss';
+import './Modal.scss';
 
-// export interface Props {
-//   visible: boolean;
-//   title: string;
-// }
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title?: string;
+  description?: string;
+  children: React.ReactNode;
+}
 
-// export default function Modal({ visible, title }: Props) {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, description, children }) => {
+  if (!isOpen) return null;
 
-//   useEffect(() => {
-//   });
+  return (
+    <div className="modal-container">
 
-//   return (
-//     <div className="modal-wrapper">
-//       Modal
-//     </div>
-//   );
-// }
+      <div className="modal-overlay" onClick={onClose}></div>
+
+      <div className='modal-content'>
+        <button
+          onClick={onClose}
+          className="close-button"
+          aria-label="Close Modal"
+        >
+          ×
+        </button>
+        {title && <h2 className="modal-title">{title}</h2>}
+        {description && <span className="modal-description"> {description} </span>}
+        <div className="modal-body">{children}</div>
+      </div>
+    </div>
+  );
+};
+
+export default Modal;

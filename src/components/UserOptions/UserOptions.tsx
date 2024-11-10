@@ -49,19 +49,30 @@ const UserOptions: React.FC<Props> = ({ data }) => {
             {
               data.isStudent &&
               <Fragment>
+                <a className='opacity-[0.33] pointer-events-none'>
+
+                  <li>🔒 Minhas Aulas</li>
+
+                </a>
                 <a href="/minha-trilha">
 
-                  <li>🛤️ Minha Trilha </li>
+                  <li>🛤️ Minha Trilha</li>
 
                 </a>
 
                 <a href="/meus-feedbacks">
 
-                  <li>🚩 Meus Feedbacks </li>
+                  <li>🚩 Meus Feedbacks</li>
 
                 </a>
               </Fragment>
             }
+
+            <a className='opacity-[0.33] pointer-events-none'>
+
+              <li>🔒 Meus Desafios</li>
+
+            </a>
 
             <button onClick={logOut}>
 

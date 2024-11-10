@@ -23,11 +23,6 @@
     <textarea id="text" name="text" required></textarea>
   </div>
 
-  <div>
-    <label for="support_link">Support Link (optional):</label>
-    <input type="url" id="support_link" name="support_link" />
-  </div>
-
   <button type="submit">Submit Feedback</button>
 </form>
 
@@ -77,18 +72,16 @@
     event.preventDefault();
 
     const formData = new FormData(event.target as HTMLFormElement);
+
     const feedback: Feedback = {
       user_id: formData.get("member_id") as string,
       author: formData.get("author") as string,
       title: formData.get("title") as string,
       text: formData.get("text") as string,
       datetime: Date.now(),
-      support_link: (formData.get("support_link") as string) || undefined,
     };
 
     await createFeedback(feedback);
-
-    console.log("Feedback Submitted:", feedback);
   }
 
   document.addEventListener("astro:page-load", () => {

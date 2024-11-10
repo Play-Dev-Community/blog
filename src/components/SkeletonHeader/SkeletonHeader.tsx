@@ -25,7 +25,7 @@ export default function SkeletonHeader({ title, desc, transitionName }: Props) {
 
     setUsername(storedUser.global_name);
     setTitle(`${userName} | ${title}`);
-    
+
     setReadyToRender(true);
   });
 
@@ -41,10 +41,10 @@ export default function SkeletonHeader({ title, desc, transitionName }: Props) {
   }
 
   return (
-    <>
+    <div>
       <h1 {...headerProps} className="text-2xl font-bold sm:text-3xl">{pageTitle}</h1>
 
       <p className="mb-6 mt-2 italic">{desc}</p>
-    </>
+    </div>
   );
 }

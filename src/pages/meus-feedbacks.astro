@@ -1,39 +1,45 @@
 ---
-import Footer from '@components/Footer.astro';
-import Header from '@components/Header.astro';
-import { SITE } from '@config';
-import Layout from '@layouts/Layout.astro';
-import SkeletonHeader from '@components/SkeletonHeader/SkeletonHeader';
-import Feedbacks from '@components/Feedbacks/Feedbacks';
-
+import Footer from "@components/Footer.astro";
+import Header from "@components/Header.astro";
+import { SITE } from "@config";
+import Layout from "@layouts/Layout.astro";
+import SkeletonHeader from "@components/SkeletonHeader/SkeletonHeader";
+import Feedbacks from "@components/Feedbacks/Feedbacks";
+import GiveFeedback from "@components/GiveFeedback/GiveFeedback";
 ---
+
 <Layout title={`Feedbacks | ${SITE.title}`}>
   <Header />
-    <main id="main-content">
-
+  <main id="main-content">
+    <div
+      class="flex flex-col items-start justify-between sm:flex-row sm:items-center"
+    >
       <SkeletonHeader
-      title="Meus Feedbacks"
-      transitionName='meus-feedbackss'
-      desc='Todos os feedbacks registrados pelo seu mentor'
-      client:load />
+        title="Meus Feedbacks"
+        transitionName="meus-feedbacks"
+        desc="Todos os feedbacks registrados pelo seu mentor"
+        client:load
+      />
 
-      <Feedbacks client:load />
+      <GiveFeedback client:load />
+    </div>
 
-    </main>
+    <Feedbacks client:load />
+  </main>
   <Footer />
 </Layout>
 
 <script>
-import { getUserData } from "@utils/user.utils";
-import { navigate } from "astro:transitions/client";
+  import { getUserData } from "@utils/user.utils";
+  import { navigate } from "astro:transitions/client";
 
   const user = getUserData();
 
-  if (!user) navigate('404');
+  if (!user) navigate("404");
 </script>
 
 <style>
   #main-content {
-    @apply mt-7 mx-auto w-full h-full max-w-7xl px-4 pb-4;
+    @apply mx-auto mt-7 h-full w-full max-w-7xl px-4 pb-4;
   }
 </style>

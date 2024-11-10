@@ -17,6 +17,10 @@
 
 .profile .avatar {
   @apply w-[60px] h-[60px] rounded-full cursor-pointer;
+
+  &.smooth-scroll {
+    @apply w-[20px] h-[20px];
+  }
 }
 
 .profile .avatar .image {

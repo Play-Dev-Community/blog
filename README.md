@@ -2,11 +2,11 @@
 
 Bem-vindo ao Blog da Comunidade Play Dev! Nosso cantinho aconchegante para compartilhar conhecimento, aprender juntos e explorar o universo da programação. Aqui você encontra postagens autônomas e aprovadas pela comunidade, além de muita interação e diversão. Vamos codar juntos? 💻✨
 
-| Versão | Tecnologias | Descrição
-|--|--|--|
-|[Acessar v1](https://github.com/gabrielmoodlight/playdev-hub/tree/versoes-antigas/static-blog)|HTML, CSS, Javascript, JSON| Primeira versão do blog. Aqui tudo era novo, inclusive a ideia. Houve a necessidade de migração para produtividade no desenvolvimento, dado que novas ideias de integrações surgiram para o projeto.
-|[Acessar v2](https://github.com/gabrielmoodlight/playdev-hub/tree/versoes-antigas/ng-blog)|Angular, Typescript, Firebase| Nessa versão, estabilizamos o conceito do Blog e como as informações seriam trafegadas, além de começarmos a pensar em UI/UX e novas funcionalidades.
-v3 (Atual)|Astro, Typescript, Markdown, Firebase| O Astro é um framework direcionado para Blogs, com diversas funcionalidades que nos atende perfeitamente. A migração ocorreu no dia `30/03/2024` e seguirá como stack definitiva do projeto.
+| <!--                                                                                           | Versão                                | Tecnologias                                                                                                                                                                                          | Descrição |
+| ---------------------------------------------------------------------------------------------- | ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Acessar v1](https://github.com/gabrielmoodlight/playdev-hub/tree/versoes-antigas/static-blog) | HTML, CSS, Javascript, JSON           | Primeira versão do blog. Aqui tudo era novo, inclusive a ideia. Houve a necessidade de migração para produtividade no desenvolvimento, dado que novas ideias de integrações surgiram para o projeto. |
+| [Acessar v2](https://github.com/gabrielmoodlight/playdev-hub/tree/versoes-antigas/ng-blog)     | Angular, Typescript, Firebase         | Nessa versão, estabilizamos o conceito do Blog e como as informações seriam trafegadas, além de começarmos a pensar em UI/UX e novas funcionalidades.                                                |
+| v3 (Atual)                                                                                     | Astro, Typescript, Markdown, Firebase | O Astro é um framework direcionado para Blogs, com diversas funcionalidades que nos atende perfeitamente. A migração ocorreu no dia `30/03/2024` e seguirá como stack definitiva do projeto. -->     |
 
 ## Principais Recursos
 

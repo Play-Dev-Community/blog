@@ -38,6 +38,7 @@ const Feedbacks: React.FC = () => {
   return (
     <div className='feedbacks-container'>
       <div className='feedbacks'>
+
         {readyToRender ?
           feedbacks.length ?
             <PaginatedFeedbacks feedbacks={feedbacks} />

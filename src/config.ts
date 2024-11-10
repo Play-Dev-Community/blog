@@ -1,10 +1,30 @@
 import type { Site, SocialObjects } from "./types";
 
 export const SITE: Site = {
-  website: "https://playdevhub.vercel.app",
+  website: "https://playdevs.com.br",
   author: "Gabriel Moodlight",
-  desc: "Hub de estudos para programação",
-  title: "Play Dev",
+  desc: "Play Devs é uma plataforma de estudos para desenvolvedores, com o objetivo de compartilhar conhecimento, aprender juntos e crescer como profissionais.",
+  title: "Play Devs",
+  keywords: [
+    'play devs',
+    'comunidade de programação',
+    'aprendizado de tecnologia',
+    'desafios de programação',
+    'hackathon de programação',
+    'mentoria em programação',
+    'desenvolvimento web',
+    'desafios semanais de programação',
+    'eventos de TI',
+    'devcoins',
+    'desenvolvimento de software',
+    'Play Devs Discord',
+    'rede de desenvolvedores',
+    'comunidade de desenvolvedores',
+    'aprendizado em tecnologia',
+    'front-end',
+    'backend',
+    'comunidade tech'
+  ],
   ogImage: "bg-discord.jpg",
   postPerPage: 5,
   scheduledPostMargin: 15 * 60 * 1000, // Minutes
@@ -32,12 +52,11 @@ export const SOCIALS: SocialObjects = [
     name: "Discord",
     href: "https://discord.gg/ZmxuUhuwfD",
     linkTitle: `${SITE.title} no Discord`,
-    active: true,
-    animated: true
+    active: true
   },
   {
     name: "Github",
-    href: "https://gabrielmoodlight.github.io/playdev.github.io/",
+    href: "https://github.com/Play-Devs",
     linkTitle: ` ${SITE.title} no Github`,
     active: true,
   },
@@ -49,7 +68,7 @@ export const SOCIALS: SocialObjects = [
   },
   {
     name: "YouTube",
-    href: "https://www.youtube.com/@GabrielMoodlight",
+    href: "https://www.youtube.com/@PlayDevs",
     linkTitle: `${SITE.title} no YouTube`,
     active: true,
   }

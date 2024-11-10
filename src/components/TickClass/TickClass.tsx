@@ -1,10 +1,11 @@
 import { getUserData } from "@utils/user.utils";
 import type { DiscordUserData } from "@api/discord";
 import { createTick, readUserTick, updateTick } from "@api/ticks";
-import React from "react";
+// import React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import './TickClass.scss';
+// import { Sounds } from "@utils/Sounds";
 
 interface Props {
   slugClass: any;
@@ -95,11 +96,11 @@ export default function TickClass({ slugClass }: Props) {
     setInputVal(tickClass?.completed || false);
 
     setTickTitle(tickClass?.completed ? 'Aula Concluída!' : 'Concluir Aula');
-    
+
     const completedText = tickClass?.completed && initialLoad
       ? `Você concluiu essa aula em\n${tickClass.datetime}`
       : 'Parabéns por concluir esta aula!\nContinue para a próxima quando estiver pronto.';
-    
+
     setTickDesc(tickClass?.completed
       ? completedText
       : 'Quando terminar de estudar esta aula, clique no botão acima para marcá-la como concluída.');
@@ -121,12 +122,12 @@ export default function TickClass({ slugClass }: Props) {
           className="tick-desc text-sm text-skin-base opacity-60 sm:max-w-[200px]"
         >
           {
-              tickDesc.split('\n').map((line, index) => (
-                <span className="first-of-type:mr-1 sm:mr-0" key={index}>
-                  {line} 
-                  <br className="hidden sm:block"/>
-                </span>
-              ))
+            tickDesc.split('\n').map((line, index) => (
+              <span className="first-of-type:mr-1 sm:mr-0" key={index}>
+                {line}
+                <br className="hidden sm:block" />
+              </span>
+            ))
           }
         </div>
       </div>

@@ -87,21 +87,38 @@ async function signInDiscord(accessToken: string) {
 
 export async function logOut() {
 
-  await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/signout`);
+  try {
+    await fetch(`${import.meta.env.PUBLIC_PLAYDEV_API}/auth/signout`);
 
-  signOut(auth).then(() => {
-    isLogged = false;
-    isLoggedIn.set(false);
+    signOut(auth).then(() => {
+      isLogged = false;
+      isLoggedIn.set(false);
 
-    Storage.clearData();
+      Storage.clearData();
 
-    navigate('/');
+      navigate('/');
 
-    setTimeout(() => {
-      window.location.reload();
-    })
-  });
+      setTimeout(() => {
+        window.location.reload();
+      })
+    });
 
+  } catch {
+
+    signOut(auth).then(() => {
+      isLogged = false;
+      isLoggedIn.set(false);
+
+      Storage.clearData();
+
+      navigate('/');
+
+      setTimeout(() => {
+        window.location.reload();
+      })
+    });
+
+  }
 }
 
 export async function startSession(accessToken: string) {

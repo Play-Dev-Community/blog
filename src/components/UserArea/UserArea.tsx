@@ -7,6 +7,7 @@ import { Storage } from '@core/storage';
 import { EStorage } from 'models/storage.model';
 
 import './UserArea.scss';
+import { startSession } from '@core/session';
 
 interface UserInfoProps {
 }
@@ -62,23 +63,48 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
     return `${url}/auth`;
   };
 
-  const authDiscord = () => {
+  const loginDiscord = () => {
     console.log('URL', convertURL());
 
     const
       clientID = '1278932305406197842',
       type = 'token',
       URI = convertURL(),
-      scope = 'identify+guilds.members.read+guilds';
+      scope = 'identify+guilds.members.read+guilds',
+      url = `https://discord.com/oauth2/authorize?client_id=${clientID}&response_type=${type}&redirect_uri=${URI}&scope=${scope}`;
 
-    window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientID}&response_type=${type}&redirect_uri=${URI}&scope=${scope}`;
+    // const popup = window.open(url, 'discordAuth', 'width=500,height=500');
+
+    window.location.href = url;
+
+    // Listener para receber a mensagem do popup
+    window.addEventListener('message', async (event) => {
+      console.log('aqui', event);
+
+      // Valida a origem da mensagem
+      if (event.origin !== URI) return;
+
+      // Extrai o token ou dados recebidos
+      const { token } = event.data;
+
+      if (token) {
+
+        await startSession(token);
+
+        // Fecha o popup
+        // popup!.close();
+
+        // Aqui você pode atualizar o estado da aplicação com os dados de login
+        // Exemplo: setUser(loggedInUserData);
+      }
+    });
   }
 
   if (!readyToRender) return null;
 
   if (readyToRender && !name && !avatar) {
     return (
-      <button onClick={authDiscord} className='btn-login'>
+      <button onClick={loginDiscord} className='btn-login'>
         <img
           src={discordIcon.src}
           alt='Ícone da logo do Discord'

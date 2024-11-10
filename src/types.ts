@@ -9,7 +9,8 @@ export type Site = {
   postPerPage: number;
   scheduledPostMargin: number;
   layoutConfig: Partial<LayoutConfig>;
-}; 
+  keywords?: string[];
+};
 
 export type SocialObjects = {
   name: keyof typeof socialIcons;

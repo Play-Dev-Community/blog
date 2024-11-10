@@ -2,8 +2,9 @@
 import { SITE } from "@config";
 import { Icon } from "astro-icon/components";
 ---
+
 <style>
-  @import 'animate.css';
+  @import "animate.css";
 
   .layout-config {
     @apply hidden transition ease-in;
@@ -14,7 +15,7 @@ import { Icon } from "astro-icon/components";
   }
 
   .layout-config .layout-options {
-    @apply absolute top-[95%] rounded-md right-0 overflow-hidden bg-skin-tooltip z-10 p-2;
+    @apply absolute right-0 top-[95%] z-10 overflow-hidden rounded-md bg-skin-tooltip p-2;
     animation: fadeIn ease-out;
     animation-duration: 0.5s;
   }
@@ -32,17 +33,8 @@ import { Icon } from "astro-icon/components";
     @apply text-skin-accent;
   }
 
-  #sun-svg:hover {
-    @apply animate-spin;
-  }
-
-  #moon-svg {
-    @apply scale-125 hover:rotate-12 sm:scale-100;
-    transition: 0.3s all;
-  }
-
   #font-size-btn {
-    @apply cursor-pointer leading-5 text-center;
+    @apply cursor-pointer text-center leading-5;
   }
 
   #font-size-btn:hover {
@@ -72,14 +64,9 @@ import { Icon } from "astro-icon/components";
     }
   }
 </style>
-  
-<div >
 
-  <Icon
-  name="gear"
-  class="icon-gear"
-  layout-config-trigger />
-
+<div>
+  <Icon name="gear" class="icon-gear" layout-config-trigger />
 </div>
 
 <div class="layout-config">
@@ -110,43 +97,50 @@ import { Icon } from "astro-icon/components";
 
     <li>
       <button
-      class="focus-outline"
-      title="Toggles background animation"
-      aria-label="auto"
-      aria-live="polite"
-      id="bg-animation-btn">
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="m11.09 7.054l.11-.46q.027-.091.057-.181l.371-.841a5 5 0 1 1 6.491 6.958l-.532.213l-.117.037l-.511.128Q16.493 13 16 13a5 5 0 0 1-4.91-5.946M9.47 5.471a7.02 7.02 0 0 0-4 4A7.002 7.002 0 0 0 8 23a7 7 0 0 0 6.529-4.47q.198-.078.39-.166l.338-.135l-.01-.026a7.03 7.03 0 0 0 3.282-3.674q.198-.076.392-.165l.336-.135l-.01-.026A7 7 0 1 0 9.47 5.471M16 15a5 5 0 0 1-1.882 1.53l-.53.212l-.12.04l-.507.126q-.467.091-.961.092a5 5 0 0 1-4.91-5.946l.11-.46q.027-.091.057-.181l.372-.842A5 5 0 0 1 9 7.999V8a7 7 0 0 0 7 7M5 12a7 7 0 0 0 7 7a5 5 0 1 1-7-7"/></svg>
-
-    </button>
+        class="focus-outline"
+        title="Toggles background animation"
+        aria-label="auto"
+        aria-live="polite"
+        id="bg-animation-btn"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="1em"
+          height="1em"
+          viewBox="0 0 24 24"
+          ><path
+            fill="currentColor"
+            d="m11.09 7.054l.11-.46q.027-.091.057-.181l.371-.841a5 5 0 1 1 6.491 6.958l-.532.213l-.117.037l-.511.128Q16.493 13 16 13a5 5 0 0 1-4.91-5.946M9.47 5.471a7.02 7.02 0 0 0-4 4A7.002 7.002 0 0 0 8 23a7 7 0 0 0 6.529-4.47q.198-.078.39-.166l.338-.135l-.01-.026a7.03 7.03 0 0 0 3.282-3.674q.198-.076.392-.165l.336-.135l-.01-.026A7 7 0 1 0 9.47 5.471M16 15a5 5 0 0 1-1.882 1.53l-.53.212l-.12.04l-.507.126q-.467.091-.961.092a5 5 0 0 1-4.91-5.946l.11-.46q.027-.091.057-.181l.372-.842A5 5 0 0 1 9 7.999V8a7 7 0 0 0 7 7M5 12a7 7 0 0 0 7 7a5 5 0 1 1-7-7"
+          ></path></svg
+        >
+      </button>
     </li>
   </ul>
 </div>
 
 <script is:inline>
-  document.addEventListener('astro:page-load', () => {
-    const config = document.querySelector('.layout-config');
-    const configTrigger = document.querySelector('*[layout-config-trigger]');
+  document.addEventListener("astro:page-load", () => {
+    const config = document.querySelector(".layout-config");
+    const configTrigger = document.querySelector("*[layout-config-trigger]");
 
-    const configIcon = document.querySelector('.icon-gear');
+    const configIcon = document.querySelector(".icon-gear");
 
     // const themeBtn = document.getElementById('theme-btn');
     // const fontSizeBtn = document.getElementById('font-size-btn');
-    const backgroundAnimationBtn = document.getElementById('bg-animation-btn');
+    const backgroundAnimationBtn = document.getElementById("bg-animation-btn");
 
     function toggleLayoutConfig() {
+      config?.classList.toggle("visible");
 
-      config?.classList.toggle('visible');
-
-      configIcon?.classList.toggle('animated');
+      configIcon?.classList.toggle("animated");
     }
     configTrigger?.addEventListener("click", toggleLayoutConfig);
 
     function toggleBgAnimation() {
-      document.querySelectorAll('canvas')?.forEach(el => {
-        el.classList.toggle('hidden');
+      document.querySelectorAll("canvas")?.forEach(el => {
+        el.classList.toggle("hidden");
       });
     }
     backgroundAnimationBtn?.addEventListener("click", toggleBgAnimation);
-  })
+  });
 </script>
