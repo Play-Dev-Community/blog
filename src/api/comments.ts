@@ -1,45 +1,58 @@
 import { database } from "@core/firebase";
-import { equalTo, get, orderByChild, push, query, ref, remove, set, update } from "firebase/database";
+import { ref, remove, update } from "firebase/database";
+import { Storage } from '@core/storage';
+import { EStorage } from "models/storage.model";
 
 // Interface Comment
 interface Comment {
-  member_id: string;
+  user_id: string;
   author: string;
   text: string;
-  pubDatetime: string | Date;
+  pub_datetime: string | Date;
   post: string;
 }
 
 // Função para criar um novo comentário
 const createComment = async (data: Comment): Promise<void> => {
+
   try {
-    const newCommentRef = push(ref(database, "comments"));
-    await set(newCommentRef, data);
-    console.log("New comment created:", newCommentRef.key);
+    let res: Response = await fetch(
+      `${import.meta.env.PUBLIC_PLAYDEV_API}/comments/${data.post}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: `Bearer ${Storage.getData(EStorage.TOKEN)}`
+      },
+      body: JSON.stringify(data)
+    });
+
+    const response = await res.json();
+
+    return response;
   } catch (e) {
     console.error("[Error] Comment Create:", e);
     throw new Error("[Error] Comment Create");
   }
+
 };
 
 // Função para ler todos os comentários de um determinado post
 const readComments = async (post: string): Promise<Comment[]> => {
   try {
-    const CommentRef = ref(database, `comments`);
-    const postQuery = query(CommentRef, orderByChild('post'), equalTo(post));
-    const postSnapshot = await get(postQuery);
+    let res: Response = await fetch(
+      `${import.meta.env.PUBLIC_PLAYDEV_API}/comments/${post}`, {
+      headers: {
+        authorization: `Bearer ${Storage.getData(EStorage.TOKEN)}`
+      }
+    }
+    );
 
-    const comments: Comment[] = [];
+    const response = await res.json();
 
-    postSnapshot.forEach(childSnapshot => {
-      const comment = childSnapshot.val() as Comment;
-      comments.push(comment);
-    });
-
-    return comments;
+    return response;
   } catch (e) {
-    console.error("[Error] Comment Read:", e);
-    throw new Error("[Error] Comment Read");
+    console.error("[Error] Comments Read:", e);
+    throw new Error("[Error] Comments Read");
   }
 };
 

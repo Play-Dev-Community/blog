@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 import './Toast.scss';
 
-type ToastType = 'success' | 'error';
+export type ToastType = 'success' | 'error';
 
 export interface Props {
   visible: boolean;
@@ -13,6 +13,7 @@ export interface Props {
 export default function Toast({ visible, type, text }: Props) {
 
   useEffect(() => {
+    
   });
 
   if (!visible) {
@@ -21,7 +22,7 @@ export default function Toast({ visible, type, text }: Props) {
 
   if (visible) {
     return (
-      <div className={`toast-wrapper--${type}`}>	
+      <div className={`toast--${type}`}>	
         { text }
       </div>
     );

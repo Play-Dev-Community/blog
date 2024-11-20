@@ -6,7 +6,9 @@ export const SITE: Site = {
   desc: "Play Devs é uma plataforma de estudos para desenvolvedores, com o objetivo de compartilhar conhecimento, aprender juntos e crescer como profissionais.",
   title: "Play Devs",
   keywords: [
+    'play dev',
     'play devs',
+    'devcoins',
     'comunidade de programação',
     'aprendizado de tecnologia',
     'desafios de programação',
@@ -15,15 +17,13 @@ export const SITE: Site = {
     'desenvolvimento web',
     'desafios semanais de programação',
     'eventos de TI',
-    'devcoins',
+    'comunidade tech',
     'desenvolvimento de software',
-    'Play Devs Discord',
     'rede de desenvolvedores',
     'comunidade de desenvolvedores',
     'aprendizado em tecnologia',
-    'front-end',
-    'backend',
-    'comunidade tech'
+    'frontend',
+    'backend'
   ],
   ogImage: "bg-discord.jpg",
   postPerPage: 5,

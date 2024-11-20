@@ -77,7 +77,10 @@ const layoutProps = {
       className="my-2"
     />
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-6xl">
+      <!-- <img src={typeof ogImage === 'string' ? ogImage : ogImage?.src} alt=""> -->
+
       <Content />
+
     </article>
 
     <ul class="my-8">
@@ -106,7 +109,7 @@ const layoutProps = {
       <ShareLinks />
     </div>
 
-    <!-- <Comments post={slug!} client:load /> -->
+    <Comments post={slug!} client:load />
 
   </main>
 

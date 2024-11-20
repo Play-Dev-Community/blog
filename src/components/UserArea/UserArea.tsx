@@ -79,7 +79,6 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
 
     // Listener para receber a mensagem do popup
     window.addEventListener('message', async (event) => {
-      console.log('aqui', event);
 
       // Valida a origem da mensagem
       if (event.origin !== URI) return;

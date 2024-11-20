@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './FooterNav.scss';
 import Modal from '@components/Modal/Modal';
-import Toast from '@components/Toast/Toast';
 
 const FooterNav: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -18,7 +17,7 @@ const FooterNav: React.FC = () => {
   //   openModal();
   // }
 
-  const openModal = () => setIsModalOpen(true);
+  // const openModal = () => setIsModalOpen(true);
   const closeModal = () => {
     setModalPolitica(false);
 
@@ -38,7 +37,6 @@ const FooterNav: React.FC = () => {
           <li className="link" onClick={openModalTermos}>Termos de Uso</li> */}
         </ul>
 
-        <Toast visible={true} type='success' text='Alo' />
       </nav>
 
       <Modal isOpen={isModalOpen} onClose={closeModal} title='Alo' description='Aooo'>

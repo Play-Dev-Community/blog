@@ -1,7 +1,9 @@
+export const prerender = true;
+
 import { SITE } from "@config";
 import type { CollectionEntry } from "astro:content";
 
-export default (post: CollectionEntry<"blog"> | CollectionEntry<"courses">) => {
+export default (post: CollectionEntry<"blog">) => {
   return (
     <div
       style={{
@@ -72,7 +74,7 @@ export default (post: CollectionEntry<"blog"> | CollectionEntry<"courses">) => {
             }}
           >
             <span>
-              by{" "}
+              por{" "}
               <span
                 style={{
                   color: "transparent",

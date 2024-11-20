@@ -1,0 +1,17 @@
+.toast {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 9999;
+  animation: fadeInUp 0.3s ease-in-out;
+  padding: 10px;
+  border-radius: 0.375rem;
+  &--success {
+    @extend .toast;
+    background-color: #40a743aa;
+  }
+  &--error {
+    @extend .toast;
+    background-color: #af1d1daa;
+  }
+}

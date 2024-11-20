@@ -3,9 +3,13 @@ import './GiveFeedback.scss';
 import Modal from '@components/Modal/Modal';
 import { createFeedback, type Feedback } from '@api/feedbacks';
 import { getUserData } from '@utils/user.utils';
+import Toast, { type ToastType } from '@components/Toast/Toast';
 
 const GiveFeedback: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastText, setToastText] = useState('');
+  const [toastType, setToastType] = useState<ToastType>('success');
 
   const openModal = () => {
 
@@ -29,7 +33,17 @@ const GiveFeedback: React.FC = () => {
 
     document.getElementsByClassName('feedback-submit')[0].setAttribute('disabled', 'true');
 
-    await createFeedback(feedback);
+    const res = await createFeedback(feedback);
+
+    if (res) {
+      setToastText('Feedback enviado com sucesso!');
+      setToastType('success');
+    } else {
+      setToastText('Erro ao enviar feedback');
+      setToastType('error');
+    }
+
+    setToastVisible(true);
 
     document.getElementsByClassName('feedback-submit')[0].removeAttribute('disabled');
   };
@@ -56,6 +70,8 @@ const GiveFeedback: React.FC = () => {
           <button className='feedback-submit' type='submit'>Enviar</button>
         </form>
       </Modal>
+
+      <Toast visible={toastVisible} type={toastType} text={toastText} />
     </>
   );
 

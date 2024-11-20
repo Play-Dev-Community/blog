@@ -5,7 +5,7 @@ export interface Props {
   full?: boolean;
 }
 
-const { noPadding = false, ariaHidden = true, full = true } = Astro.props;
+const { noPadding = false, ariaHidden = true } = Astro.props;
 ---
 
 <div class={`hr-box-shadow mx-auto ${noPadding ? "px-0" : "px-4"}`}>

@@ -8,11 +8,10 @@ import { createComment, readComments } from '@api/comments';
 import './Comments.scss';
 
 interface Comment {
-  member_id: string;
   author: string;
   text: string;
   post: string;
-  pubDatetime: string | Date;
+  pub_datetime: string | Date;
 }
 
 interface Props {
@@ -36,26 +35,67 @@ const Comments: React.FC<Props> = ({ post }) => {
     setMemberName(storedUser.global_name);
   }, []);
 
-  const fetchComments = () => {
-      readComments(post).then(res => {
-        setComments(res);
-      }).catch(e => {
-        console.error(e);
-      });
+const formatDate = (date: string | Date) => {
+  const dateObj = new Date(date);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now.getTime() - dateObj.getTime()) / 1000);
+
+  // Menos de 30 segundos
+  if (diffInSeconds < 30) {
+    return 'Agora mesmo';
+  }
+
+  // Menos de 1 minuto
+  if (diffInSeconds < 60) {
+    return `${diffInSeconds} segundos atrás`;
+  }
+
+  // Menos de 1 hora
+  const diffInMinutes = Math.floor(diffInSeconds / 60);
+  if (diffInMinutes < 60) {
+    return `${diffInMinutes} ${diffInMinutes === 1 ? 'minuto' : 'minutos'} atrás`;
+  }
+
+  // Menos de 1 dia
+  const diffInHours = Math.floor(diffInMinutes / 60);
+  if (diffInHours < 24) {
+    return `${diffInHours} ${diffInHours === 1 ? 'hora' : 'horas'} atrás`;
+  }
+
+  // Menos de 7 dias
+  const diffInDays = Math.floor(diffInHours / 24);
+  if (diffInDays < 7) {
+    return `${diffInDays} ${diffInDays === 1 ? 'dia' : 'dias'} atrás`;
+  }
+
+  // Mais de 7 dias - formato original
+  return dateObj.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  }).replace(',', ' às');
+};
+
+  const fetchComments = async () => {
+      setComments(await readComments(post));
   };
 
   const handleAddComment = async () => {
     if (newComment.trim() === '') return;
 
-    createComment({
-      member_id: memberID!,
+    await createComment({
+      user_id: memberID!,
       author: memberName!,
       text: newComment,
       post,
-      pubDatetime: new Date()
+      pub_datetime: new Date()
     });
 
-    fetchComments();
+    setNewComment('');
+
+    await fetchComments();
   };
 
   return (
@@ -87,9 +127,9 @@ const Comments: React.FC<Props> = ({ post }) => {
         { comments.length ?
           comments.map(comment => 
             (
-              <div key={`${comment.member_id}_${comment.pubDatetime}`}>
+              <div key={`${comment.author}_${comment.pub_datetime}`}>
                 <p>{comment.text}</p>
-                <small className='opacity-50'>{comment.author} • {comment.pubDatetime.toString()}</small>
+                <small className='opacity-50'>{comment.author} • {formatDate(comment.pub_datetime)}</small>
               </div>
             )
           ) : (

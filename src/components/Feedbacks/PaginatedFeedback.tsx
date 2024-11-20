@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import './Feedbacks.scss';
-import FeedbackReactionBar from '@components/FeedbackReactionBar/FeedbackReactionBar';
 import type { Feedback } from '@api/feedbacks';
 
 const PaginatedFeedbacks = ({ feedbacks }: { feedbacks: Feedback[] }) => {

@@ -14,8 +14,7 @@ export interface Feedback {
 }
 
 // Função para criar um novo comentário
-const createFeedback = async (data: Feedback): Promise<void> => {
-
+const createFeedback = async (data: Feedback): Promise<{ message: string }|void> => {
 
   try {
     let res: Response = await fetch(
@@ -35,6 +34,7 @@ const createFeedback = async (data: Feedback): Promise<void> => {
     console.error("[Error] Feedback Create:", e);
     throw new Error("[Error] Feedback Create");
   }
+
 };
 
 // Função para ler todos os comentários de um determinado post
