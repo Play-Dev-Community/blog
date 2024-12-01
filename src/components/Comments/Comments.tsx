@@ -123,7 +123,7 @@ const formatDate = (date: string | Date) => {
         }
       </div>
       <div className='comments'>
-        <h1 className="text-3xl font-bold">Comentários</h1>
+        <h3 className="text-3xl font-bold">Comentários</h3>
         { comments.length ?
           comments.map(comment => 
             (

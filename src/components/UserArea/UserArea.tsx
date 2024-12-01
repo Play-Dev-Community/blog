@@ -67,7 +67,7 @@ const UserArea: React.FC<UserInfoProps> = ({ }) => {
     console.log('URL', convertURL());
 
     const
-      clientID = '1278932305406197842',
+      clientID = '1312595714236485724',
       type = 'token',
       URI = convertURL(),
       scope = 'identify+guilds.members.read+guilds',

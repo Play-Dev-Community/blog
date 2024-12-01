@@ -22,6 +22,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 <Layout>
   <Header />
   <main id="main-content">
+
+    <WelcomeUser client:load />
+
     <!-- <section id="hero">
       <div>
         <h1>
@@ -31,7 +34,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </div>
 
       <p>
-        Bem-vindo ao Blog da Play Dev, onde apaixonados por tecnologia e criativos se encontram 
+        Bem-vindo ao Blog da Play Devs, onde apaixonados por tecnologia e criativos se encontram
         para compartilhar conhecimento em áreas como 
         💻 desenvolvimento web, 📱 mobile, 🎮 game dev, 🎨 design e mais. 
         Explore tópicos avançados como 🧠 Inteligência Artificial e 
@@ -39,24 +42,9 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
         <span class="block animate-slideIn"></span>
         <span class="block">Aqui você encontra tudo sobre tecnologia e programação. 🤓</span>
         <span class="block">Acompanhe as novidades e fique por dentro do que há de mais recente no mundo dev! 🌟</span>
-
       </p>
-
-      <div class="flex flex-row-reverse justify-between items-center">
-        {
-          // only display if at least one social link is enabled
-          socialCount > 0 && (
-            <div class="social-wrapper">
-              <Socials />
-            </div>
-          )
-        }
-      </div>
     </section>
-
     <Hr /> -->
-
-    <WelcomeUser client:load />
 
     {
       featuredPosts.length > 0 && (

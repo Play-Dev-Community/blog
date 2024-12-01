@@ -36,6 +36,10 @@ export default function WelcomeUser({ }: Props) {
   const getDescRoles = (memberRoles: string[]): string => {
     // Mapeia IDs de funções para descrições
     const roles = new Map<string, string>([
+        ['1200574950457749585', 'Diretor Geral'],
+        ['1311952326273142874', 'Mentor'],
+        ['1200298866952638517', 'Instrutor'],
+        ['1269500715739381781', 'Staff Oficial do Discord'],
         ['1200298866952638517', 'Front end'],
         ['1200299036469637140', 'Back end'],
         ['1200299272260825129', 'Full Stack'],
@@ -44,7 +48,6 @@ export default function WelcomeUser({ }: Props) {
         ['1210079016883855420', 'Game'],
         ['1211539874143014932', 'Designer'],
         ['1200299533075222640', 'UI/UX'],
-        ['1269500715739381781', 'Staff Oficial do Discord']
     ]);
 
     // Prefixos para diferentes IDs
@@ -63,9 +66,9 @@ export default function WelcomeUser({ }: Props) {
             const roleDesc = roles.get(roleId);
 
             if (roleDesc) {
-                // Adiciona o prefixo 'Developer' para IDs específicos
-                const prefix = developerRoleIds.has(roleId) ? 'Developer' : '';
-                return `${roleDesc} ${prefix}`.trim();
+                // Adiciona o sufixo 'Developer' para IDs específicos
+                const suffix = developerRoleIds.has(roleId) ? 'Developer' : '';
+                return `${roleDesc} ${suffix}`.trim();
             }
 
             return null;
@@ -106,7 +109,7 @@ export default function WelcomeUser({ }: Props) {
 
   return (
     <section className="mt-5">
-      <h1 className="text-2xl font-bold sm:text-2xl">{title}</h1>
+      <h2 className="text-2xl font-bold sm:text-2xl">{title}</h2>
       <span className="mt-2 italic">{desc}</span>
     </section>
   );
