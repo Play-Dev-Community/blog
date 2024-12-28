@@ -8,6 +8,7 @@ Disallow: /nogooglebot/
 User-agent: *
 Allow: /
 Disallow: /auth/
+Disallow: /desafios/
 
 Sitemap: ${new URL("/sitemap.xml", SITE.website).href}
 `.trim();

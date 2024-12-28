@@ -1,7 +1,10 @@
 .btn-login {
-  @apply rounded-md p-2 flex items-center justify-between gap-2 font-bold transition-all ease-in;
+  @apply rounded-md p-2 flex items-center justify-between gap-2 font-bold transition-all ease-in text-skin-base;
   border: 2px solid #14b8c0;
-  color: #f1f1f1;
+}
+
+.btn-login img path{
+  @apply fill-skin-base;
 }
 
 @media screen and (min-width: 640px) {
