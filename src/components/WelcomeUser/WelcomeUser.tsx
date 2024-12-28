@@ -36,10 +36,11 @@ export default function WelcomeUser({ }: Props) {
   const getDescRoles = (memberRoles: string[]): string => {
     // Mapeia IDs de funções para descrições
     const roles = new Map<string, string>([
-        ['1200574950457749585', 'Diretor Geral'],
+        ['1200574950457749585', 'CEO'],
         ['1311952326273142874', 'Mentor'],
         ['1200298866952638517', 'Instrutor'],
-        ['1269500715739381781', 'Staff Oficial do Discord'],
+        ['1269500715739381781', 'Staff do Discord'],
+        ['1285027203460894791', 'Programador Oficial'],
         ['1200298866952638517', 'Front end'],
         ['1200299036469637140', 'Back end'],
         ['1200299272260825129', 'Full Stack'],

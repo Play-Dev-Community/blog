@@ -45,6 +45,8 @@ const GiveFeedback: React.FC = () => {
 
     setToastVisible(true);
 
+    closeModal();
+
     document.getElementsByClassName('feedback-submit')[0].removeAttribute('disabled');
   };
 
@@ -71,7 +73,7 @@ const GiveFeedback: React.FC = () => {
         </form>
       </Modal>
 
-      <Toast visible={toastVisible} type={toastType} text={toastText} />
+      <Toast visible={toastVisible} type={toastType} text={toastText} onClose={() => setToastVisible(false)}/>
     </>
   );
 

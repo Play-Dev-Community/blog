@@ -11,40 +11,52 @@ import getSortedPosts from "@utils/getSortedPosts";
 import BannerCookies from "@components/BannerCookies.astro";
 import WelcomeUser from "@components/WelcomeUser/WelcomeUser";
 import { IconArrowRight } from "@tabler/icons-react";
+import Tag from "@components/Tag.astro";
+import getTopTags from "@utils/getTopTags";
 
 const posts = await getCollection("blog");
 
 const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+
+let tags = getTopTags(posts);
 ---
 
 <Layout>
   <Header />
   <main id="main-content">
-
     <WelcomeUser client:load />
 
-    <!-- <section id="hero">
+    <section id="hero">
       <div>
-        <h1>
-          <span class="text-skin-base">Blog de Programação</span>
-        </h1>
-
+        <h2>
+          <span class="text-5xl font-bold text-skin-base">Nosso Blog</span>
+        </h2>
       </div>
 
       <p>
-        Bem-vindo ao Blog da Play Devs, onde apaixonados por tecnologia e criativos se encontram
-        para compartilhar conhecimento em áreas como 
-        💻 desenvolvimento web, 📱 mobile, 🎮 game dev, 🎨 design e mais. 
-        Explore tópicos avançados como 🧠 Inteligência Artificial e 
-        conecte-se com profissionais de diversas áreas no mundo da tecnologia!
-        <span class="block animate-slideIn"></span>
-        <span class="block">Aqui você encontra tudo sobre tecnologia e programação. 🤓</span>
-        <span class="block">Acompanhe as novidades e fique por dentro do que há de mais recente no mundo dev! 🌟</span>
+        <span class="block"> Boas vindas ao blog da Play Devs! 🚀 </span>
+
+        <span class="block">
+          O ponto de encontro perfeito para desenvolvedores compartilharem
+          dicas, tutoriais e insights valiosos!
+        </span>
+
+        <span class="block">
+          Fique atualizado com as últimas tendências, ferramentas e tecnologias
+          que estão transformando o universo da programação. 🌟
+        </span>
+
+        <!-- <span class="block mt-5">
+          TOP 5 Tags
+        </span>
+
+        <ul class="flex">
+          {tags.map(({ tag }) => <Tag {tag} size="lg" />)}
+        </ul> -->
       </p>
     </section>
-    <Hr /> -->
 
     {
       featuredPosts.length > 0 && (
@@ -99,7 +111,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   @import "animate.css";
   /* ===== Hero Section ===== */
   #hero {
-    @apply pb-6 pt-8 text-center;
+    @apply pb-6 pt-8;
   }
   #hero h1 {
     @apply my-4 inline-block text-3xl font-bold text-skin-accent sm:mt-0 sm:text-5xl;
@@ -120,7 +132,7 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
   }
 
   #recent-posts {
-    @apply pb-6 pt-8;
+    @apply pb-6 pt-0;
   }
 
   #featured h2 {

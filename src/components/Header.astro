@@ -68,7 +68,7 @@ const { activeNav, isAuth } = Astro.props;
 
   .logo .logo-letter:hover {
     @apply text-skin-accent;
-    margin-top: -0.75rem;
+    margin-top: -0.5rem;
     transition-duration: 250ms;
   }
 
@@ -191,14 +191,18 @@ const { activeNav, isAuth } = Astro.props;
 
               <Icon name="logo" class="logo-svg" />
 
-              <span class="logo-letter">P</span>
-              <span class="logo-letter">l</span>
-              <span class="logo-letter">a</span>
-              <span class="logo-letter">y</span>
-              <span class="logo-letter">D</span>
-              <span class="logo-letter">e</span>
-              <span class="logo-letter">v</span>
-              <span class="logo-letter">s</span>
+              <h1 class="flex">
+                <span class="logo-letter">P</span>
+                <span class="logo-letter">l</span>
+                <span class="logo-letter">a</span>
+                <span class="logo-letter">y</span>
+                <span class="mx-[2px]"></span>
+                <span class="logo-letter">D</span>
+                <span class="logo-letter">e</span>
+                <span class="logo-letter">v</span>
+                <span class="logo-letter">s</span>
+              </h1>
+
             </div>
           ) : (
             SITE.title
@@ -320,7 +324,6 @@ const { activeNav, isAuth } = Astro.props;
                 </span>
               </button>
             </li>
-
           </div>
 
           <!-- <li class="relative">
